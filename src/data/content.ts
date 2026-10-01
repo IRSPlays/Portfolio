@@ -112,28 +112,241 @@ export const roles = [
   "Professional fox (self-declared)",
 ];
 
-export const arsenal = [
+export const arsenalTiers = [
   {
-    domain: "AI & Edge Computing",
-    items: ["Gemini 3.1 Flash", "PyTorch", "Python", "YOLO11n-NCNN", "OpenCV", "Custom Edge LLMs", "ROCm / HIP"],
+    tier: "Layer 1 · Silicon & Rapid Prototyping",
+    subtitle: "the physical world fights back",
+    items: [
+      "Elegoo Neptune 4 Pro — high-speed FDM mechanical iteration",
+      "Parametric CAD & tolerancing — optical mounts, snap-fit chassis, sensor brackets",
+      "Hardware telemetry — logic sniffing, bench power analysis, I2C/SPI/UART debugging",
+    ],
   },
   {
-    domain: "Hardware & Systems",
-    items: ["Raspberry Pi 5", "Hailo-8L (13 TOPS)", "AMD DirectML", "SwiftUI / Core ML", "Linux", "GPIO haptics"],
+    tier: "Layer 2 · Firmware, Edge & OS",
+    subtitle: "the bare metal",
+    items: [
+      "Embedded POSIX & minimal Linux (Xubuntu) — low-overhead environments",
+      "Embedded C/C++ & Python — device drivers and sensor loop timing",
+      "Autonomous terminal agents — OpenCode, Claude Code for rapid iteration",
+    ],
   },
   {
-    domain: "Full-Stack & Web",
-    items: ["TypeScript", "React", "Next.js", "Node.js", "Rust / Tauri", "Vite"],
-  },
-  {
-    domain: "Cloud & Real-Time",
-    items: ["Supabase", "SQLite", "DigitalOcean", "Railway", "MCP Protocol", "WebRTC"],
-  },
-  {
-    domain: "Interactive UI & Audio",
-    items: ["Three.js", "Framer Motion", "Web-Audio Synthesizer", "Spatial Audio", "Cartesia TTS", "Supertonic"],
+    tier: "Layer 3 · Spatial & Cognitive Engine",
+    subtitle: "multimodal brains, on the edge",
+    items: [
+      "Quantized on-device neural models — low-latency edge vision inference",
+      "Spatial tracking pipelines — SteamVR ecosystem integration",
+      "Dual-voice interrupt TTS — <100ms hardware-switched preemption",
+    ],
   },
 ];
+
+export const arsenalMarquee = [
+  "Python", "C/C++", "PyTorch", "ROCm", "Rust", "TypeScript", "Next.js", "React", "Three.js",
+  "Raspberry Pi 5", "Hailo-8L", "Elegoo Neptune 4 Pro", "YOLO11n", "OpenCV", "Gemini API",
+  "WebRTC", "Web-Audio", "Supabase", "SQLite", "SwiftUI", "Core ML", "Linux", "SteamVR", "MCP",
+];
+
+export type TimelineEntry = {
+  date: string;
+  title: string;
+  tag: string;
+  story: string;
+  accent?: boolean;
+};
+
+export const timeline: TimelineEntry[] = [
+  {
+    date: "V1 · First Light",
+    title: "The ESP32-CAM relay",
+    tag: "prototype",
+    story:
+      "A button, a camera, and a laptop across the room doing the thinking. Slow and not standalone — but it proved camera-plus-AI guidance could work.",
+  },
+  {
+    date: "V2 · The Upgrade",
+    title: "The shoulder-strap brick",
+    tag: "prototype",
+    story:
+      "RPi Compute Module 5 + AI accelerator: the first real edge computer, on-device models, commodity parts. Serious hardware — but the strap never stopped fighting the user's shoulder.",
+  },
+  {
+    date: "V3 · Pocket Unit",
+    title: "It disappears into a pocket",
+    tag: "current build",
+    story:
+      "RPi 5 + Hailo-8L, dual camera on the glasses, one USB-C cable to the pocket. You stop thinking about the computer entirely. This is the build that won TKKYIA 2026.",
+    accent: true,
+  },
+  {
+    date: "12 Sep 2026",
+    title: "Introducing Aether",
+    tag: "aether",
+    story:
+      "The in-house edge model enters the journal: ≈187M parameters, trained and run on a single AMD RX 7600 — the reason Cortex navigation can leave the cloud.",
+  },
+  {
+    date: "19 Sep 2026",
+    title: "TKKYIA 2026 · Merit Award",
+    tag: "recognition",
+    story:
+      "Tan Kah Kee Young Inventors' Award 2026 — the highest award presented in the Student Category this year. Three students, age 15, and a year of field sessions with SAVH.",
+    accent: true,
+  },
+  {
+    date: "27 Sep 2026",
+    title: "V4: from prototype to an ecosystem",
+    tag: "next",
+    story:
+      "Refactored software, Aether-local navigation, managed cloud infrastructure, a companion app — and glasses rebuilt from scratch in CAD. The road continues.",
+  },
+];
+
+export const awards = [
+  {
+    name: "TKKYIA 2026 · Merit Award",
+    detail:
+      "Highest award presented in the Student Category this year. Tan Kah Kee Foundation with MOE & Science Centre Singapore.",
+    date: "19 Sep 2026",
+  },
+  {
+    name: "A year of SAVH field sessions",
+    detail: "Co-designed and user-tested with the Singapore Association for the Visually Handicapped.",
+    date: "2025–2026",
+  },
+  {
+    name: "Team of three, age 15",
+    detail: "Admiralty Secondary: Haziq (system), Irfan (form), Eryna (people). Three roles, one device.",
+    date: "2026",
+  },
+  {
+    name: "Build with Gemini XPRIZE",
+    detail: "Asirive Copartner entered the Build with Gemini XPRIZE before its retirement.",
+    date: "2026",
+  },
+];
+
+export const testimonials = [
+  {
+    quote:
+      "[PLACEHOLDER — quote from a SAVH tester about walking with Cortex. Real words go here.]",
+    who: "SAVH field tester",
+    role: "user trial participant",
+  },
+  {
+    quote: "[PLACEHOLDER — quote from a teacher/mentor about TKKYIA or the build journey.]",
+    who: "Teacher / mentor",
+    role: "Admiralty Secondary",
+  },
+  {
+    quote: "[PLACEHOLDER — quote from Irfan or Eryna about building together.]",
+    who: "Teammate",
+    role: "Asirive co-founder",
+  },
+];
+
+export const nowItems = [
+  {
+    title: "Cortex V4 — prototype → ecosystem",
+    detail: "Refactored software, Aether-local navigation, companion app, glasses rebuilt from scratch in CAD.",
+    status: "IN PROGRESS",
+    date: "since 27 Sep 2026",
+  },
+  {
+    title: "Aether REV 0.1",
+    detail: "Training toward the 6.55B token target on one RX 7600. Publishing failures as we go.",
+    status: "IN DEVELOPMENT",
+    date: "updated weekly",
+  },
+  {
+    title: "NRPC 2026 Platform",
+    detail: "Holding steady for 500+ teams with real-time leaderboards.",
+    status: "LIVE",
+    date: "2026 season",
+  },
+  {
+    title: "Fursuit Cortex — biomechatronics R&D",
+    detail: "Responsive animatronics research. The fox is becoming hardware.",
+    status: "EARLY R&D",
+    date: "whenever sleep permits",
+  },
+];
+
+export const graveyard = [
+  {
+    title: "V1 optical frame mount",
+    died: "Sheared along layer lines under 1.2 Nm torque.",
+    fix: "Reoriented print layers 45° and thickened the perimeter to 4 shells.",
+  },
+  {
+    title: "Edge vision SoC thermals",
+    died: "Hit 82°C inside an unvented enclosure during continuous inference.",
+    fix: "Integrated an aluminum passive heat spreader with channeled perimeter venting.",
+  },
+  {
+    title: "V2 shoulder-strap mount",
+    died: "Ergonomics defeat: the strap fought the user's shoulder on every walk.",
+    fix: "Killed the strap. Compute moved to a pocket unit on one USB-C cable (V3).",
+  },
+];
+
+export const fursuitRnd = {
+  status: "STATUS: EARLY R&D · MASCOT-INTEGRATED HARDWARE",
+  blurb:
+    "Designing assistive biomechatronics and responsive animatronics — because if Cortex gives humans new senses, Cypher deserves some too.",
+  points: [
+    "Dynamic load-balancing tail assemblies",
+    "Active jaw linkages",
+    "Integrated micro-climate cooling",
+  ],
+};
+
+export const stackVerdicts: Record<string, { score: string; line: string }> = {
+  electron: { score: "3/10", line: "RIP system memory. We run bare-metal edge hardware here." },
+  "c++": { score: "9.5/10", line: "Direct memory control. Zero runtime bloat. Respect." },
+  c: { score: "9.5/10", line: "Direct memory control. Zero runtime bloat. Respect." },
+  cpp: { score: "9.5/10", line: "Direct memory control. Zero runtime bloat. Respect." },
+  assembly: { score: "9.5/10", line: "You talk to the silicon directly. Cypher bows." },
+  python: { score: "7/10", line: "Great for model prototyping, but keep it away from real-time blocking loops." },
+  rust: { score: "9/10", line: "Memory safety without the garbage collector overhead. Acceptable." },
+  docker: { score: "5/10", line: "Boxes inside boxes. Fine for the cloud, useless during a brownout." },
+  wordpress: { score: "1/10", line: "*stares in embedded C* Try again." },
+  react: { score: "8/10", line: "Websites pretending to be apps. I allow it — this portfolio runs on it." },
+  "next.js": { score: "8.5/10", line: "React with a spine. Deployed on Vercel like a civilized being." },
+  nextjs: { score: "8.5/10", line: "React with a spine. Deployed on Vercel like a civilized being." },
+  typescript: { score: "8/10", line: "Types are just armor for your future self. Wear them." },
+  "three.js": { score: "9/10", line: "Pixels in the third dimension. Cypher approves of this geometry." },
+  threejs: { score: "9/10", line: "Pixels in the third dimension. Cypher approves of this geometry." },
+  pytorch: { score: "9/10", line: "Where Aether's ancestors were born. Tender memories." },
+  java: { score: "4/10", line: "Write once, run out of heap everywhere." },
+  go: { score: "7/10", line: "Fast, boring, reliable. Like a good soldering iron." },
+  html: { score: "6/10", line: "Not a language. Still essential. Like oxygen." },
+  css: { score: "7.5/10", line: "The true boss battle. Centering a div is a personality test." },
+  matlab: { score: "3/10", line: "Expensive sadness with a matrix fetish." },
+};
+
+export const stackSuffixes = [
+  "Judged with love.",
+  "This verdict is final (until tomorrow).",
+  "Cypher's tail remains unimpressed.",
+  "Benchmarked against vibes, not FLOPS.",
+  "Next question. The fox is busy.",
+];
+
+export const fortunes = [
+  "Today's forecast: 90% chance of thermal throttling. Vent your enclosures.",
+  "A bug renamed is a feature half-solved.",
+  "Somewhere, a shoulder strap is failing its user. Be better than V2.",
+  "If it works on the first try, you've learned nothing. Break something.",
+  "Hydrate. Your brain is also an embedded system.",
+  "Honour scales better than perfection.",
+];
+
+export const resume = {
+  cvHref: "/assets/haziq-cv.pdf",
+  label: "CV ↓",
+};
 
 export type Project = {
   id: string;
@@ -145,6 +358,7 @@ export type Project = {
   built: string[];
   highlights: string[];
   stack: string[];
+  badges?: string[];
   links: { label: string; href: string }[];
   coverSlot: PhotoSlotId;
   featured?: boolean;
@@ -174,6 +388,7 @@ export const projects: Project[] = [
       "TKKYIA 2026 Merit Award (Tan Kah Kee Young Inventors')",
     ],
     stack: ["Python", "Gemini 3.1", "YOLO11n-NCNN", "Hailo-8L", "Raspberry Pi 5", "TTS"],
+    badges: ["User Trials: SAVH", "TKKYIA 2026 Merit"],
     links: [
       { label: "asirive.com/cortex", href: "https://www.asirive.com/cortex" },
       { label: "Demo V2 ▶", href: "https://www.youtube.com/watch?v=vgvTApfXBPM" },
@@ -203,6 +418,7 @@ export const projects: Project[] = [
       "We publish failures",
     ],
     stack: ["PyTorch", "ROCm / HIP", "AMD RX 7600", "Custom Kernels", "Python"],
+    badges: ["Built in public", "Sister project to Cortex"],
     links: [
       { label: "asirive.com/aether", href: "https://www.asirive.com/aether" },
       { label: "Lineage repo (SNAP-C1)", href: "https://github.com/IRSPlays/SNAP-C1" },
@@ -223,6 +439,7 @@ export const projects: Project[] = [
     ],
     highlights: ["500+ teams", "Strict score calculation", "Real-time live leaderboards"],
     stack: ["React", "TypeScript", "Node.js", "Express", "SQLite"],
+    badges: ["Institutional: NRPC 2026"],
     links: [
       { label: "Live", href: "https://www.nrpc-platform.app" },
       { label: "Repo", href: "https://github.com/IRSPlays/Competition-Management-Platform" },

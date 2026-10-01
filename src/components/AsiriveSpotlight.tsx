@@ -38,7 +38,7 @@ export default function AsiriveSpotlight() {
 
       <div className="mx-auto w-[min(1150px,92vw)]">
         <Reveal>
-          <p className="micro text-inksoft">02 · the flagship company</p>
+          <p className="micro text-inksoft">03 · the flagship company</p>
           <h2 className="mt-2 font-display text-[clamp(3rem,9vw,7rem)] font-extrabold leading-[0.9]">
             {asirive.name}
           </h2>
@@ -99,12 +99,14 @@ export default function AsiriveSpotlight() {
             <h4 className="micro mt-10 text-inksoft">one device. three versions. each one fixed a specific failure.</h4>
             <ol className="mt-3 grid grid-cols-1 gap-3 md:grid-cols-3">
               {versions.map((v, i) => (
-                <Reveal key={v.name} delay={i * 0.09} y={18}>
-                  <li className="sticker-card h-full px-5 py-5">
-                    <p className="font-display text-lg font-extrabold">{v.name}</p>
-                    <p className="mt-2 text-sm text-inksoft">{v.desc}</p>
-                  </li>
-                </Reveal>
+                <li key={v.name}>
+                  <Reveal delay={i * 0.09} y={18}>
+                    <div className="sticker-card h-full px-5 py-5">
+                      <p className="font-display text-lg font-extrabold">{v.name}</p>
+                      <p className="mt-2 text-sm text-inksoft">{v.desc}</p>
+                    </div>
+                  </Reveal>
+                </li>
               ))}
             </ol>
 

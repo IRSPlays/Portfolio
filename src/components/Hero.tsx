@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import FoxMascot from "@/components/FoxMascot";
+import StackJudge from "@/components/StackJudge";
 import { Sticker, PawIcon, SparkleIcon, BoltIcon } from "@/components/Sticker";
 import { profile, roles } from "@/data/content";
 
@@ -129,7 +130,7 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.75 }}
           >
-            <a href="#projects" className="btn-squish btn-solid">
+            <a href="#lab" className="btn-squish btn-solid">
               see my chaos
             </a>
             <a href="#asirive" className="btn-squish btn-coral">
@@ -149,12 +150,12 @@ export default function Hero() {
             <FoxMascot size={330} />
           </motion.div>
           <motion.div
-            className="absolute -bottom-4 left-2 rounded-2xl border-[3px] border-line bg-card px-4 py-2 shadow-[4px_5px_0_var(--shadowc)] md:left-0"
+            className="absolute -bottom-8 left-2 md:left-0"
             initial={{ scale: 0, rotate: -12 }}
-            animate={{ scale: 1, rotate: -3 }}
+            animate={{ scale: 1, rotate: -2 }}
             transition={{ type: "spring", stiffness: 260, damping: 12, delay: 1 }}
           >
-            <span className="micro font-bold">that&apos;s Cypher. he judges your stack.</span>
+            <StackJudge />
           </motion.div>
         </div>
       </div>
@@ -176,7 +177,7 @@ export default function Hero() {
         animate={{ y: [0, 10, 0] }}
         transition={{ repeat: Infinity, duration: 1.8, ease: "easeInOut" }}
       >
-        <span className="micro text-inksoft">scroll (gently)</span>
+        <span className="micro rounded-full bg-card px-3 py-1 text-inksoft">scroll (gently)</span>
       </motion.a>
     </section>
   );

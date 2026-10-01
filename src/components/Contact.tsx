@@ -2,14 +2,14 @@
 
 import Reveal from "@/components/Reveal";
 import PhotoFrame from "@/components/PhotoFrame";
-import { profile, socials } from "@/data/content";
+import { profile, resume, socials } from "@/data/content";
 
 export default function Contact() {
   return (
     <section id="contact" className="relative pt-28">
       <div className="mx-auto w-[min(1150px,92vw)]">
         <Reveal>
-          <p className="micro text-inksoft">06 · transmissions open</p>
+          <p className="micro text-inksoft">09 · transmissions open</p>
           <h2 className="mt-2 text-[clamp(2.6rem,7vw,5.5rem)] font-extrabold leading-[0.92]">
             Let&apos;s build something <span className="text-coral">loud.</span>
           </h2>
@@ -23,6 +23,9 @@ export default function Contact() {
           <div className="mt-10 flex flex-wrap items-center gap-4">
             <a href={`mailto:${profile.email}`} className="btn-squish btn-coral px-7 py-4 text-lg">
               {profile.email}
+            </a>
+            <a href={resume.cvHref} className="btn-squish px-7 py-4 text-lg">
+              CV ↓ · spec sheet
             </a>
             {socials.map((s) => (
               <a

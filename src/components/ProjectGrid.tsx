@@ -18,6 +18,11 @@ function StatusPills({ project }: { project: Project }) {
       {project.formerly ? (
         <span className="micro rounded-full bg-navy/15 px-2 py-0.5 text-navy">ex-{project.formerly}</span>
       ) : null}
+      {project.badges?.map((b) => (
+        <span key={b} className="micro rounded-full bg-amber/20 px-2 py-0.5 text-amber">
+          {b}
+        </span>
+      ))}
     </>
   );
 }
@@ -127,7 +132,7 @@ export default function ProjectGrid() {
   return (
     <section id="projects" className="mx-auto w-[min(1150px,92vw)] py-28">
       <Reveal>
-        <p className="micro text-inksoft">04 · the build pile</p>
+        <p className="micro text-inksoft">06 · the build pile</p>
         <h2 className="mt-2 text-[clamp(2.4rem,6vw,4.5rem)] font-extrabold leading-[0.95]">
           Projects, experiments & <span className="text-teal">controlled chaos.</span>
         </h2>

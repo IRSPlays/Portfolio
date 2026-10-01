@@ -1,21 +1,16 @@
 "use client";
 
 import { motion, useScroll, useSpring, useTransform, useVelocity } from "framer-motion";
-import { useRef } from "react";
 import Reveal from "@/components/Reveal";
-import { arsenal } from "@/data/content";
+import { arsenalMarquee, arsenalTiers } from "@/data/content";
 
-function Row({ domain, items, reverse }: { domain: string; items: string[]; reverse?: boolean }) {
+function MarqueeRow({ items }: { items: string[] }) {
   const doubled = [...items, ...items];
   return (
-    <div className={`marquee ${reverse ? "marquee-reverse" : ""}`} style={{ ["--speed" as string]: `${26 + items.length * 3}s` }}>
+    <div className="marquee" style={{ ["--speed" as string]: "45s" }}>
       <div className="marquee-track py-2">
         {doubled.map((item, i) => (
-          <span
-            key={`${item}-${i}`}
-            className="btn-squish pointer-events-none whitespace-nowrap px-5 py-2 text-sm"
-          >
-            <span className="micro mr-2 text-inksoft">{domain.split(" ")[0].toLowerCase()}</span>
+          <span key={`${item}-${i}`} className="btn-squish pointer-events-none whitespace-nowrap px-5 py-2 text-sm">
             {item}
           </span>
         ))}
@@ -25,30 +20,46 @@ function Row({ domain, items, reverse }: { domain: string; items: string[]; reve
 }
 
 export default function ArsenalMarquee() {
-  const ref = useRef<HTMLDivElement>(null);
   const { scrollY } = useScroll();
   const velocity = useVelocity(scrollY);
   const smooth = useSpring(velocity, { stiffness: 220, damping: 40 });
   const skew = useTransform(smooth, (v) => Math.max(-3, Math.min(3, v / 260)));
 
   return (
-    <section id="arsenal" className="py-28" ref={ref}>
+    <section id="arsenal" className="py-28">
       <div className="mx-auto w-[min(1150px,92vw)]">
         <Reveal>
-          <p className="micro text-inksoft">03 · technical arsenal</p>
+          <p className="micro text-inksoft">05 · technical arsenal</p>
           <h2 className="mt-2 text-[clamp(2.4rem,6vw,4.5rem)] font-extrabold leading-[0.95]">
-            Things I wrestle <span className="text-coral">daily.</span>
+            The <span className="text-teal">zero-glaze</span> stack.
           </h2>
+          <p className="mt-3 max-w-2xl text-inksoft">
+            Three functional layers from silicon to cognition. No icon soup, no fluff — just what actually ships.
+          </p>
         </Reveal>
+
+        <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
+          {arsenalTiers.map((tier, i) => (
+            <Reveal key={tier.tier} delay={i * 0.09}>
+              <article className="sticker-card h-full px-6 py-6">
+                <p className="micro text-amber">{tier.tier}</p>
+                <h3 className="mt-1 font-display text-2xl font-extrabold">{tier.subtitle}</h3>
+                <ul className="mt-4 space-y-3 text-inksoft">
+                  {tier.items.map((item) => (
+                    <li key={item} className="flex gap-2">
+                      <span className="text-teal">▸</span>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </article>
+            </Reveal>
+          ))}
+        </div>
       </div>
 
-      <motion.div className="mt-12 space-y-4" style={{ skewY: skew }}>
-        {arsenal.map((row, i) => (
-          <div key={row.domain}>
-            <p className="mx-auto w-[min(1150px,92vw)] micro mb-1 text-inksoft">{row.domain}</p>
-            <Row domain={row.domain} items={row.items} reverse={i % 2 === 1} />
-          </div>
-        ))}
+      <motion.div className="mt-14" style={{ skewY: skew }}>
+        <MarqueeRow items={arsenalMarquee} />
       </motion.div>
     </section>
   );

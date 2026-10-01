@@ -24,14 +24,14 @@ export default function About() {
       </Reveal>
 
       <div className="mt-14 grid grid-cols-1 items-start gap-14 md:grid-cols-[0.9fr_1.1fr]">
-        <div className="relative h-[520px]">
-          <motion.div style={{ y: yA }} className="absolute left-0 top-0 w-[78%] rotate-[-4deg]">
+        <div className="relative flex flex-col items-center gap-8 md:block md:h-[520px]">
+          <motion.div style={{ y: yA }} className="w-full max-w-[340px] rotate-[-4deg] md:absolute md:left-0 md:top-0 md:w-[78%] md:max-w-none">
             <div className="sticker-card p-3">
               <PhotoFrame slot="cypher-portrait" src="/cypher-sticker.jpg" alt="Cypher, Haziq's fursona" />
               <p className="micro mt-2 text-center text-inksoft">CYPHER · resident fox · CTO of vibes</p>
             </div>
           </motion.div>
-          <motion.div style={{ y: yB }} className="absolute bottom-0 right-0 w-[52%] rotate-[5deg]">
+          <motion.div style={{ y: yB }} className="w-full max-w-[230px] rotate-[5deg] md:absolute md:bottom-0 md:right-0 md:w-[52%] md:max-w-none">
             <div className="sticker-card p-3">
               <PhotoFrame slot="haziq-portrait" src="/haziq-portrait.png" alt="Haziq Shah, Founder of Asirive" />
               <p className="micro mt-2 text-center text-inksoft">the human · founder, asirive</p>
