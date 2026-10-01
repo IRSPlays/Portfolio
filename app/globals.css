@@ -1,0 +1,271 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --bg: #f6ebd3;
+  --bg2: #eeddc0;
+  --ink: #1c2b24;
+  --inksoft: #4d5f53;
+  --mint: #58b45f;
+  --teal: #1f857c;
+  --navy: #29566e;
+  --coral: #d9634a;
+  --amber: #d98a2b;
+  --card: #fdf7ea;
+  --line: #1c2b24;
+  --shadowc: rgba(28, 43, 36, 0.22);
+  --slotbg: #f1e4c8;
+}
+
+.dark {
+  --bg: #16211c;
+  --bg2: #0f1712;
+  --ink: #f2efe2;
+  --inksoft: #aab8a6;
+  --mint: #a5e6a0;
+  --teal: #2fa398;
+  --navy: #6f9dc0;
+  --coral: #f0876b;
+  --amber: #efa14c;
+  --card: #212d24;
+  --line: #0b110d;
+  --shadowc: rgba(0, 0, 0, 0.5);
+  --slotbg: #2a362b;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg2: var(--bg2);
+  --color-ink: var(--ink);
+  --color-inksoft: var(--inksoft);
+  --color-mint: var(--mint);
+  --color-teal: var(--teal);
+  --color-navy: var(--navy);
+  --color-coral: var(--coral);
+  --color-amber: var(--amber);
+  --color-card: var(--card);
+  --color-line: var(--line);
+  --font-display: var(--font-display), "Trebuchet MS", ui-sans-serif, sans-serif;
+  --font-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-mono), ui-monospace, "Cascadia Mono", monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background:
+    radial-gradient(1200px 600px at 85% -5%, color-mix(in srgb, var(--amber) 22%, transparent), transparent 60%),
+    radial-gradient(900px 500px at 0% 100%, color-mix(in srgb, var(--teal) 16%, transparent), transparent 55%),
+    linear-gradient(180deg, var(--bg), var(--bg2));
+  background-attachment: fixed;
+  color: var(--ink);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--coral);
+  color: var(--bg);
+}
+
+h1, h2, h3, .font-display {
+  font-family: var(--font-display);
+}
+
+.micro {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.7rem;
+}
+
+/* ---------- die-cut sticker cards ---------- */
+.sticker-card {
+  background: var(--card);
+  border: 3px solid var(--line);
+  border-radius: 24px;
+  box-shadow: 7px 9px 0 var(--shadowc);
+  transition: transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 220ms ease;
+}
+.sticker-card:hover {
+  transform: translate(-2px, -4px) rotate(-0.4deg);
+  box-shadow: 10px 13px 0 var(--shadowc);
+}
+
+/* circuit-line glow, jacket-style */
+.circuit {
+  position: relative;
+}
+.circuit::after {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border-radius: 18px;
+  border: 1.5px dashed color-mix(in srgb, var(--mint) 55%, transparent);
+  opacity: 0.5;
+  pointer-events: none;
+  animation: circuit-pulse 4s ease-in-out infinite;
+}
+@keyframes circuit-pulse {
+  0%, 100% { opacity: 0.25; }
+  50% { opacity: 0.7; }
+}
+
+/* ---------- buttons ---------- */
+.btn-squish {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.4rem;
+  border: 3px solid var(--line);
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--ink);
+  font-weight: 700;
+  box-shadow: 4px 5px 0 var(--shadowc);
+  transition: transform 150ms cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 150ms ease, background 150ms ease;
+}
+.btn-squish:hover {
+  transform: scale(1.06) rotate(-1deg);
+  box-shadow: 6px 8px 0 var(--shadowc);
+}
+.btn-squish:active {
+  transform: scale(0.92, 1.06);
+  box-shadow: 1px 2px 0 var(--shadowc);
+}
+.btn-solid {
+  background: var(--teal);
+  color: var(--bg);
+}
+.btn-coral {
+  background: var(--coral);
+  color: var(--bg);
+}
+
+/* ---------- marquee ---------- */
+.marquee {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+.marquee-track {
+  display: flex;
+  gap: 1rem;
+  width: max-content;
+  animation: marquee var(--speed, 36s) linear infinite;
+}
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+.marquee-reverse .marquee-track {
+  animation-direction: reverse;
+}
+@keyframes marquee {
+  to { transform: translateX(-50%); }
+}
+
+/* ---------- photo slots ---------- */
+.photo-slot {
+  position: relative;
+  background:
+    repeating-linear-gradient(45deg, transparent 0 14px, color-mix(in srgb, var(--ink) 5%, transparent) 14px 15px),
+    var(--slotbg);
+  border: 3px dashed color-mix(in srgb, var(--ink) 45%, transparent);
+  border-radius: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1.25rem;
+  text-align: center;
+  overflow: hidden;
+}
+.photo-slot .tape {
+  position: absolute;
+  top: -12px;
+  width: 90px;
+  height: 26px;
+  background: color-mix(in srgb, var(--amber) 55%, transparent);
+  border: 1px solid color-mix(in srgb, var(--ink) 18%, transparent);
+  transform: rotate(-4deg);
+}
+.photo-filled {
+  border-style: solid;
+  background: var(--slotbg);
+}
+
+/* ---------- paw cursor ---------- */
+@media (hover: hover) and (pointer: fine) {
+  .paw-on, .paw-on * {
+    cursor: none !important;
+  }
+}
+
+/* ---------- party (konami) mode ---------- */
+.party .party-target {
+  animation: rainbow-hue 2.5s linear infinite;
+}
+.party .party-dance {
+  animation: party-dance 0.6s ease-in-out infinite alternate;
+}
+@keyframes rainbow-hue {
+  to { filter: hue-rotate(360deg); }
+}
+@keyframes party-dance {
+  from { transform: rotate(-4deg) scale(1); }
+  to { transform: rotate(4deg) scale(1.05); }
+}
+
+/* ---------- fox bits ---------- */
+.fox-blink {
+  animation: fox-blink 5.2s infinite;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+@keyframes fox-blink {
+  0%, 93%, 100% { transform: scaleY(1); }
+  95.5% { transform: scaleY(0.06); }
+}
+.tail-sway {
+  animation: tail-sway 3.4s ease-in-out infinite alternate;
+  transform-origin: bottom center;
+  transform-box: fill-box;
+}
+@keyframes tail-sway {
+  from { transform: rotate(-8deg); }
+  to { transform: rotate(10deg); }
+}
+.float-soft {
+  animation: float-soft 6s ease-in-out infinite;
+}
+@keyframes float-soft {
+  0%, 100% { transform: translateY(0) rotate(-1deg); }
+  50% { transform: translateY(-12px) rotate(1deg); }
+}
+
+/* ---------- sunbeam sweep on theme toggle ---------- */
+.sunbeam {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  pointer-events: none;
+  background: linear-gradient(100deg, transparent 30%, color-mix(in srgb, var(--amber) 45%, transparent) 50%, transparent 70%);
+  animation: sunbeam-sweep 900ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+@keyframes sunbeam-sweep {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(100%); }
+}
+
+/* ---------- reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
