@@ -22,7 +22,7 @@ export type PhotoSlot = {
 
 export const photoSlots: Record<PhotoSlotId, PhotoSlot> = {
   "haziq-portrait": {
-    want: "A photo of YOU (Haziq) — casual, good lighting. Goes in the About polaroid frame.",
+    want: "Auto-filled with the official Haziq portrait from asirive.com/team.",
     aspect: "3 / 4",
   },
   "cypher-portrait": {
@@ -171,6 +171,7 @@ export const projects: Project[] = [
       "Co-designed with SAVH",
       "$186 BOM measured",
       "Built in Singapore",
+      "TKKYIA 2026 Merit Award (Tan Kah Kee Young Inventors')",
     ],
     stack: ["Python", "Gemini 3.1", "YOLO11n-NCNN", "Hailo-8L", "Raspberry Pi 5", "TTS"],
     links: [

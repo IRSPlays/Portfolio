@@ -6,7 +6,7 @@ import PhotoFrame from "@/components/PhotoFrame";
 import Reveal from "@/components/Reveal";
 import { profile } from "@/data/content";
 
-const chips = ["SAVH-tested", "XPRIZE builder", "HackerOne researcher", "Edge vision nerd", "Failing with honour"];
+const chips = ["SAVH-co-designed", "TKKYIA 2026 Merit Award", "XPRIZE builder", "HackerOne researcher", "Edge vision nerd", "Failing with honour"];
 
 export default function About() {
   const ref = useRef<HTMLDivElement>(null);
@@ -33,8 +33,8 @@ export default function About() {
           </motion.div>
           <motion.div style={{ y: yB }} className="absolute bottom-0 right-0 w-[52%] rotate-[5deg]">
             <div className="sticker-card p-3">
-              <PhotoFrame slot="haziq-portrait" />
-              <p className="micro mt-2 text-center text-inksoft">the human</p>
+              <PhotoFrame slot="haziq-portrait" src="/haziq-portrait.png" alt="Haziq Shah, Founder of Asirive" />
+              <p className="micro mt-2 text-center text-inksoft">the human · founder, asirive</p>
             </div>
           </motion.div>
         </div>
