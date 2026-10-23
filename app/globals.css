@@ -70,8 +70,22 @@ html.lenis, html.lenis body {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-9px); }
 }
-.shimmer-teal { color: var(--teal); }
-.shimmer-coral { color: var(--coral); }
+.shimmer-teal, .shimmer-coral {
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 5s linear infinite;
+}
+.shimmer-teal {
+  background-image: linear-gradient(90deg, var(--teal), var(--mint), var(--navy), var(--teal));
+}
+.shimmer-coral {
+  background-image: linear-gradient(90deg, var(--coral), var(--amber), var(--coral));
+}
+@keyframes shimmer {
+  to { background-position: -220% 0; }
+}
 .ring-spin {
   animation: ring-spin 18s linear infinite;
 }
