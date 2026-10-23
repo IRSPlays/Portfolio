@@ -2,20 +2,19 @@
 
 import { motion, useScroll, useSpring, useTransform, useVelocity } from "framer-motion";
 import Reveal from "@/components/Reveal";
+import SectionHead from "@/components/motion/SectionHead";
+import VelocityMarquee from "@/components/motion/VelocityMarquee";
 import { arsenalMarquee, arsenalTiers } from "@/data/content";
 
-function MarqueeRow({ items }: { items: string[] }) {
-  const doubled = [...items, ...items];
+function Pills({ items }: { items: string[] }) {
   return (
-    <div className="marquee" style={{ ["--speed" as string]: "45s" }}>
-      <div className="marquee-track py-2">
-        {doubled.map((item, i) => (
-          <span key={`${item}-${i}`} className="btn-squish pointer-events-none whitespace-nowrap px-5 py-2 text-sm">
-            {item}
-          </span>
-        ))}
-      </div>
-    </div>
+    <>
+      {items.map((item, i) => (
+        <span key={`${item}-${i}`} className="btn-squish pointer-events-none mx-2 whitespace-nowrap px-5 py-2 text-sm">
+          {item}
+        </span>
+      ))}
+    </>
   );
 }
 
@@ -28,19 +27,15 @@ export default function ArsenalMarquee() {
   return (
     <section id="arsenal" className="py-28">
       <div className="mx-auto w-[min(1150px,92vw)]">
-        <Reveal>
-          <p className="micro text-inksoft">05 · technical arsenal</p>
-          <h2 className="mt-2 text-[clamp(2.4rem,6vw,4.5rem)] font-extrabold leading-[0.95]">
-            The <span className="text-teal">zero-glaze</span> stack.
-          </h2>
-          <p className="mt-3 max-w-2xl text-inksoft">
-            Three functional layers from silicon to cognition. No icon soup, no fluff — just what actually ships.
-          </p>
-        </Reveal>
+        <SectionHead
+          kicker="05 · technical arsenal"
+          parts={[{ t: "The" }, { t: "zero-glaze", c: "shimmer-teal" }, { t: "stack." }]}
+          sub="Three functional layers from silicon to cognition. No icon soup, no fluff — just what actually ships."
+        />
 
         <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
           {arsenalTiers.map((tier, i) => (
-            <Reveal key={tier.tier} delay={i * 0.09}>
+            <Reveal key={tier.tier} delay={i * 0.12} variant="tilt">
               <article className="sticker-card h-full px-6 py-6">
                 <p className="micro text-amber">{tier.tier}</p>
                 <h3 className="mt-1 font-display text-2xl font-extrabold">{tier.subtitle}</h3>
@@ -58,8 +53,13 @@ export default function ArsenalMarquee() {
         </div>
       </div>
 
-      <motion.div className="mt-14" style={{ skewY: skew }}>
-        <MarqueeRow items={arsenalMarquee} />
+      <motion.div className="mt-14 space-y-4" style={{ skewY: skew }}>
+        <VelocityMarquee base={-5}>
+          <Pills items={arsenalMarquee} />
+        </VelocityMarquee>
+        <VelocityMarquee base={5}>
+          <Pills items={[...arsenalMarquee].reverse()} />
+        </VelocityMarquee>
       </motion.div>
     </section>
   );

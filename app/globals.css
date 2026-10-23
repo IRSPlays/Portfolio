@@ -52,7 +52,48 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
+}
+html.lenis, html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+/* ---------- motion-graphics extras ---------- */
+.letter-wave {
+  display: inline-block;
+  animation: letter-wave 3.4s ease-in-out infinite;
+}
+@keyframes letter-wave {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-9px); }
+}
+.shimmer-teal, .shimmer-coral {
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 5s linear infinite;
+}
+.shimmer-teal {
+  background-image: linear-gradient(90deg, var(--teal), var(--mint), var(--navy), var(--teal));
+}
+.shimmer-coral {
+  background-image: linear-gradient(90deg, var(--coral), var(--amber), var(--coral));
+}
+@keyframes shimmer {
+  to { background-position: -220% 0; }
+}
+.ring-spin {
+  animation: ring-spin 18s linear infinite;
+}
+@keyframes ring-spin {
+  to { transform: rotate(360deg); }
+}
+.sticker-card.tilt-3d {
+  transform-style: preserve-3d;
 }
 
 body {

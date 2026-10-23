@@ -1,9 +1,10 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import PhotoFrame from "@/components/PhotoFrame";
 import Reveal from "@/components/Reveal";
+import SectionHead from "@/components/motion/SectionHead";
 import { projects, type Project } from "@/data/content";
 
 function StatusPills({ project }: { project: Project }) {
@@ -126,45 +127,102 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
   );
 }
 
+function ProjectCard({ p, i, onOpen, wide }: { p: Project; i: number; onOpen: () => void; wide?: boolean }) {
+  return (
+    <button
+      onClick={onOpen}
+      className={`sticker-card group flex h-full flex-col p-5 text-left ${wide ? "w-[min(430px,82vw)] shrink-0" : "w-full"}`}
+      style={wide ? { rotate: `${i % 2 ? 1.2 : -1.2}deg` } : undefined}
+    >
+      <span className="micro mb-3 text-amber">
+        {String(i + 1).padStart(2, "0")} / {String(projects.length).padStart(2, "0")}
+      </span>
+      <PhotoFrame slot={p.coverSlot} aspect="16 / 9" className="w-full" />
+      <div className="mt-4 flex flex-wrap items-center gap-2">
+        <h3 className="font-display text-2xl font-extrabold">{p.name}</h3>
+        <StatusPills project={p} />
+      </div>
+      <p className="mt-1 text-inksoft">{p.tagline}</p>
+      <div className="mt-4 flex flex-wrap gap-2">
+        {p.stack.slice(0, 3).map((s) => (
+          <span key={s} className="micro rounded-full bg-teal/15 px-2.5 py-1 text-teal">
+            {s}
+          </span>
+        ))}
+      </div>
+      <span className="micro mt-auto pt-4 text-inksoft transition-transform group-hover:translate-x-1">
+        open the case study →
+      </span>
+    </button>
+  );
+}
+
 export default function ProjectGrid() {
   const [open, setOpen] = useState<Project | null>(null);
+  const [desktop, setDesktop] = useState(false);
+  const [dist, setDist] = useState(0);
+  const wrap = useRef<HTMLDivElement>(null);
+  const track = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 1024px) and (prefers-reduced-motion: no-preference)");
+    const measure = () => {
+      setDesktop(mq.matches);
+      if (track.current) setDist(Math.max(0, track.current.scrollWidth - window.innerWidth));
+    };
+    measure();
+    mq.addEventListener("change", measure);
+    window.addEventListener("resize", measure);
+    const t = window.setTimeout(measure, 300);
+    const t2 = window.setTimeout(measure, 1200);
+    return () => {
+      mq.removeEventListener("change", measure);
+      window.removeEventListener("resize", measure);
+      window.clearTimeout(t);
+      window.clearTimeout(t2);
+    };
+  }, [desktop]);
+
+  const { scrollYProgress } = useScroll({ target: wrap, offset: ["start start", "end end"] });
+  const x = useTransform(scrollYProgress, [0, 1], [0, -dist]);
 
   return (
-    <section id="projects" className="mx-auto w-[min(1150px,92vw)] py-28">
-      <Reveal>
-        <p className="micro text-inksoft">06 · the build pile</p>
-        <h2 className="mt-2 text-[clamp(2.4rem,6vw,4.5rem)] font-extrabold leading-[0.95]">
-          Projects, experiments & <span className="text-teal">controlled chaos.</span>
-        </h2>
-        <p className="mt-3 text-inksoft">Tap a card for the full story. Yes, the cards are stickers too.</p>
-      </Reveal>
+    <section id="projects" className="py-28">
+      <div className="mx-auto w-[min(1150px,92vw)]">
+        <SectionHead
+          kicker="06 · the build pile"
+          parts={[{ t: "Projects, experiments &" }, { t: "controlled chaos.", c: "shimmer-teal" }]}
+          sub={
+            desktop
+              ? "Keep scrolling — the pile slides sideways. Click a card for the full story."
+              : "Tap a card for the full story. Yes, the cards are stickers too."
+          }
+        />
+      </div>
 
-      <div className="mt-12 grid grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-3">
-        {projects.map((p, i) => (
-          <Reveal key={p.id} delay={(i % 3) * 0.08}>
-            <button
-              onClick={() => setOpen(p)}
-              className="sticker-card group flex h-full w-full flex-col p-5 text-left"
-            >
-              <PhotoFrame slot={p.coverSlot} aspect="16 / 9" className="w-full" />
-              <div className="mt-4 flex flex-wrap items-center gap-2">
-                <h3 className="font-display text-2xl font-extrabold">{p.name}</h3>
-                <StatusPills project={p} />
-              </div>
-              <p className="mt-1 text-inksoft">{p.tagline}</p>
-              <div className="mt-4 flex flex-wrap gap-2">
-                {p.stack.slice(0, 3).map((s) => (
-                  <span key={s} className="micro rounded-full bg-teal/15 px-2.5 py-1 text-teal">
-                    {s}
-                  </span>
-                ))}
-              </div>
-              <span className="micro mt-auto pt-4 text-inksoft transition-transform group-hover:translate-x-1">
-                open the case study →
-              </span>
-            </button>
-          </Reveal>
-        ))}
+      <div ref={wrap} className="relative mt-10" style={desktop ? { height: `calc(100vh + ${dist}px)` } : undefined}>
+      {desktop ? (
+        <div className="h-full">
+          <div className="sticky top-0 flex h-screen flex-col justify-center overflow-hidden">
+            <motion.div ref={track} style={{ x }} className="flex w-max items-stretch gap-8 px-[4vw] py-10">
+              {projects.map((p, i) => (
+                <ProjectCard key={p.id} p={p} i={i} wide onOpen={() => setOpen(p)} />
+              ))}
+            </motion.div>
+            <div className="mx-auto mt-6 h-2.5 w-[min(520px,70vw)] overflow-hidden rounded-full border-2 border-line bg-card">
+              <motion.div className="h-full origin-left bg-coral" style={{ scaleX: scrollYProgress }} />
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className="mx-auto mt-12 grid w-[min(1150px,92vw)] grid-cols-1 gap-7 sm:grid-cols-2">
+          {projects.map((p, i) => (
+            <Reveal key={p.id} delay={(i % 2) * 0.08} variant="tilt">
+              <ProjectCard p={p} i={i} onOpen={() => setOpen(p)} />
+            </Reveal>
+          ))}
+        </div>
+      )}
       </div>
 
       <AnimatePresence>

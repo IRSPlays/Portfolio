@@ -2,6 +2,8 @@
 
 import Image from "next/image";
 import Reveal from "@/components/Reveal";
+import Magnetic from "@/components/motion/Magnetic";
+import SectionHead from "@/components/motion/SectionHead";
 import PhotoFrame from "@/components/PhotoFrame";
 import CypherMascot from "@/components/CypherMascot";
 import { profile, resume, socials } from "@/data/content";
@@ -19,41 +21,37 @@ const footerLinks = [
 export default function Contact() {
   const scrollToTop = () => {
     boing();
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    if (window.__lenis) window.__lenis.scrollTo(0, { duration: 1.8 });
+    else window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
     <section id="contact" className="relative pt-28">
       <div className="mx-auto w-[min(1150px,92vw)]">
-        <Reveal>
-          <p className="micro text-inksoft">09 · transmissions open</p>
-          <h2 className="mt-2 text-[clamp(2.6rem,7vw,5.5rem)] font-extrabold leading-[0.92]">
-            Let&apos;s build something <span className="text-coral">loud.</span>
-          </h2>
-          <p className="mt-4 max-w-2xl text-lg text-inksoft leading-relaxed">
-            Assistive tech, ambient AI, stage AV, or gloriously silly web experiments — my inbox is
-            open and Cypher reads over my shoulder.
-          </p>
-        </Reveal>
+        <SectionHead
+          kicker="09 · transmissions open"
+          parts={[{ t: "Let's build something" }, { t: "loud.", c: "shimmer-coral" }]}
+          sub="Assistive tech, ambient AI, stage AV, or gloriously silly web experiments — my inbox is open and Cypher reads over my shoulder."
+        />
 
         <Reveal delay={0.12}>
           <div className="mt-10 flex flex-wrap items-center gap-4">
-            <a href={`mailto:${profile.email}`} className="btn-squish btn-coral px-7 py-4 text-lg">
-              {profile.email}
-            </a>
-            <a href={resume.cvHref} className="btn-squish px-7 py-4 text-lg">
-              CV ↓ · spec sheet
-            </a>
-            {socials.map((s) => (
-              <a
-                key={s.href}
-                href={s.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-squish"
-              >
-                {s.label} <span className="micro text-inksoft">{s.handle}</span>
+            <Magnetic strength={0.4}>
+              <a href={`mailto:${profile.email}`} className="btn-squish btn-coral px-7 py-4 text-lg">
+                {profile.email}
               </a>
+            </Magnetic>
+            <Magnetic strength={0.4}>
+              <a href={resume.cvHref} className="btn-squish px-7 py-4 text-lg">
+                CV ↓ · spec sheet
+              </a>
+            </Magnetic>
+            {socials.map((s) => (
+              <Magnetic key={s.href}>
+                <a href={s.href} target="_blank" rel="noopener noreferrer" className="btn-squish">
+                  {s.label} <span className="micro text-inksoft">{s.handle}</span>
+                </a>
+              </Magnetic>
             ))}
           </div>
         </Reveal>

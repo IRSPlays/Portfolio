@@ -3,6 +3,10 @@
 import Image from "next/image";
 import Reveal from "@/components/Reveal";
 import PhotoFrame from "@/components/PhotoFrame";
+import CountUp from "@/components/motion/CountUp";
+import SplitText from "@/components/motion/SplitText";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
 import { asirive, projects } from "@/data/content";
 
 const versions = [
@@ -31,29 +35,37 @@ const aetherStats = [
 export default function AsiriveSpotlight() {
   const cortex = projects.find((p) => p.id === "asirive-cortex")!;
   const aether = projects.find((p) => p.id === "asirive-aether")!;
+  const head = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: head, offset: ["start end", "end start"] });
+  const nameX = useTransform(scrollYProgress, [0, 1], ["12%", "-12%"]);
 
   return (
     <section id="asirive" className="relative py-28">
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-transparent via-amber/15 to-transparent" aria-hidden />
 
       <div className="mx-auto w-[min(1150px,92vw)]">
-        <Reveal>
+        <div ref={head}>
           <p className="micro text-inksoft">03 · the flagship company</p>
-          <h2 className="mt-2 font-display text-[clamp(3rem,9vw,7rem)] font-extrabold leading-[0.9]">
+          <motion.h2
+            style={{ x: nameX }}
+            className="mt-2 whitespace-nowrap font-display text-[clamp(4rem,17vw,14rem)] font-extrabold leading-[0.85] shimmer-teal"
+          >
             {asirive.name}
-          </h2>
+          </motion.h2>
           <p className="micro mt-1 text-amber">{asirive.tagline} · asirive.com</p>
-        </Reveal>
+        </div>
 
-        <Reveal delay={0.1}>
-          <blockquote className="mt-8 max-w-4xl font-display text-[clamp(1.5rem,3.4vw,2.6rem)] font-bold leading-tight">
-            “{asirive.belief}”
-          </blockquote>
+        <Reveal delay={0.05}>
+          <SplitText
+            as="p"
+            parts={[{ t: `“${asirive.belief}”` }]}
+            className="mt-8 max-w-4xl font-display text-[clamp(1.5rem,3.4vw,2.6rem)] font-bold leading-tight"
+          />
           <p className="mt-3 text-lg text-inksoft">{asirive.mission}</p>
         </Reveal>
 
         {/* FLAGSHIP: Asirive Cortex */}
-        <Reveal delay={0.15}>
+        <Reveal variant="tilt">
           <article className="sticker-card circuit mt-14 p-6 md:p-10">
             <div className="flex flex-wrap items-center gap-3">
               <span className="btn-squish pointer-events-none btn-coral px-4 py-1 text-xs">FLAGSHIP</span>
@@ -97,15 +109,21 @@ export default function AsiriveSpotlight() {
             </ul>
 
             <h4 className="micro mt-10 text-inksoft">one device. three versions. each one fixed a specific failure.</h4>
-            <ol className="mt-3 grid grid-cols-1 gap-3 md:grid-cols-3">
+            <ol className="mt-3">
               {versions.map((v, i) => (
-                <li key={v.name}>
-                  <Reveal delay={i * 0.09} y={18}>
-                    <div className="sticker-card h-full px-5 py-5">
-                      <p className="font-display text-lg font-extrabold">{v.name}</p>
-                      <p className="mt-2 text-sm text-inksoft">{v.desc}</p>
-                    </div>
-                  </Reveal>
+                <li
+                  key={v.name}
+                  className="sticky mb-[22vh] last:mb-0"
+                  style={{ top: 96 + i * 22, zIndex: i + 1 }}
+                >
+                  <div
+                    className="sticker-card px-6 py-6 md:px-8"
+                    style={{ transform: `rotate(${(i - 1) * 0.8}deg)` }}
+                  >
+                    <p className="micro text-amber">step 0{i + 1} / 03</p>
+                    <p className="mt-1 font-display text-2xl font-extrabold md:text-3xl">{v.name}</p>
+                    <p className="mt-2 max-w-2xl text-inksoft">{v.desc}</p>
+                  </div>
                 </li>
               ))}
             </ol>
@@ -170,7 +188,7 @@ export default function AsiriveSpotlight() {
                   {aetherStats.map((s) => (
                     <li key={s.k} className="sticker-card px-4 py-3">
                       <p className="micro text-inksoft">{s.k}</p>
-                      <p className="font-display text-xl font-extrabold">{s.v}</p>
+                      <CountUp value={s.v} className="font-display text-xl font-extrabold" />
                     </li>
                   ))}
                 </ul>

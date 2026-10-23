@@ -3,6 +3,7 @@
 import { motion, useScroll, useSpring } from "framer-motion";
 import { useRef } from "react";
 import Reveal from "@/components/Reveal";
+import SectionHead from "@/components/motion/SectionHead";
 import { timeline } from "@/data/content";
 
 export default function RoadToV3() {
@@ -12,15 +13,11 @@ export default function RoadToV3() {
 
   return (
     <section id="road" className="mx-auto w-[min(1150px,92vw)] py-28">
-      <Reveal>
-        <p className="micro text-inksoft">02 · the road to v3</p>
-        <h2 className="mt-2 text-[clamp(2.4rem,6vw,4.5rem)] font-extrabold leading-[0.95]">
-          One year. Three versions. <span className="text-coral">Zero ego.</span>
-        </h2>
-        <p className="mt-3 max-w-2xl text-inksoft">
-          Each version exists because the last one failed at something specific — straight from the Asirive journal.
-        </p>
-      </Reveal>
+      <SectionHead
+        kicker="02 · the road to v3"
+        parts={[{ t: "One year. Three versions." }, { t: "Zero ego.", c: "shimmer-coral" }]}
+        sub="Each version exists because the last one failed at something specific — straight from the Asirive journal."
+      />
 
       <div ref={ref} className="relative mt-16">
         <div className="absolute left-[18px] top-0 h-full w-[4px] rounded bg-line/15 md:left-1/2 md:-translate-x-1/2" aria-hidden />
@@ -35,14 +32,18 @@ export default function RoadToV3() {
             const right = i % 2 === 1;
             return (
               <li key={entry.title} className="relative pl-12 md:grid md:grid-cols-2 md:gap-14 md:pl-0">
-                <span
-                  className={`absolute left-[7px] top-2 h-6 w-6 rounded-full border-[4px] border-line md:left-1/2 md:-translate-x-1/2 ${
+                <motion.span
+                  className={`absolute left-[7px] top-2 z-10 h-6 w-6 rounded-full border-[4px] border-line md:left-1/2 md:-ml-3 ${
                     entry.accent ? "bg-coral" : "bg-mint"
                   }`}
+                  initial={{ scale: 0 }}
+                  whileInView={{ scale: [0, 1.7, 1] }}
+                  viewport={{ once: true, margin: "-30% 0px -30% 0px" }}
+                  transition={{ duration: 0.6, ease: "easeOut" }}
                   aria-hidden
                 />
                 <Reveal
-                  delay={0.05}
+                  variant={right ? "right" : "left"}
                   className={`${right ? "md:col-start-2" : "md:col-start-1 md:text-right"}`}
                 >
                   <article className={`sticker-card px-6 py-5 ${entry.accent ? "circuit" : ""}`}>

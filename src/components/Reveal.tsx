@@ -2,26 +2,45 @@
 
 import { motion } from "framer-motion";
 
+type Variant = "rise" | "pop" | "left" | "right" | "tilt";
+
+const from = (v: Variant, y: number, rotate: number) => {
+  switch (v) {
+    case "pop":
+      return { opacity: 0, scale: 0.82, y: 24, rotate };
+    case "left":
+      return { opacity: 0, x: -70, rotate: -1.5 };
+    case "right":
+      return { opacity: 0, x: 70, rotate: 1.5 };
+    case "tilt":
+      return { opacity: 0, y: 50, rotate: rotate * 6, scale: 0.96 };
+    default:
+      return { opacity: 0, y, rotate };
+  }
+};
+
 export default function Reveal({
   children,
   delay = 0,
-  y = 28,
+  y = 34,
   rotate = -0.6,
+  variant = "rise",
   className = "",
 }: {
   children: React.ReactNode;
   delay?: number;
   y?: number;
   rotate?: number;
+  variant?: Variant;
   className?: string;
 }) {
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y, rotate }}
-      whileInView={{ opacity: 1, y: 0, rotate: 0 }}
-      viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.55, delay, ease: [0.34, 1.3, 0.64, 1] }}
+      initial={{ ...from(variant, y, rotate), filter: "blur(8px)" }}
+      whileInView={{ opacity: 1, y: 0, x: 0, scale: 1, rotate: 0, filter: "blur(0px)" }}
+      viewport={{ once: true, margin: "-70px" }}
+      transition={{ duration: 0.8, delay, ease: [0.16, 1, 0.3, 1] }}
     >
       {children}
     </motion.div>
