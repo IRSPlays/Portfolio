@@ -368,3 +368,11 @@ p, li, blockquote {
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
+.blink-dot {
+  animation: blink-dot 1.4s ease-in-out infinite;
+}
+@keyframes blink-dot {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}

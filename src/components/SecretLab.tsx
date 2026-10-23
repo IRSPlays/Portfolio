@@ -1,8 +1,10 @@
 "use client";
 
+import { motion, useScroll, useTransform } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import CypherMascot from "@/components/CypherMascot";
 import Reveal from "@/components/Reveal";
+import Band from "@/components/motion/Band";
 import SectionHead from "@/components/motion/SectionHead";
 import { Sticker, PawIcon, ChipIcon, SparkleIcon, BoltIcon } from "@/components/Sticker";
 import {
@@ -17,6 +19,32 @@ import {
 import { soundEnabled, toggleSound, blip, boing } from "@/lib/sound";
 
 const KONAMI = ["ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown", "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight", "b", "a"];
+
+function Tomb({ g, i }: { g: (typeof graveyard)[number]; i: number }) {
+  const ref = useRef<HTMLLIElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 100%", "start 55%"] });
+  const y = useTransform(scrollYProgress, [0, 1], [110, 0]);
+  const o = useTransform(scrollYProgress, [0, 0.5], [0, 1]);
+  const r = useTransform(scrollYProgress, [0, 1], [i % 2 ? 6 : -6, i % 2 ? 1.2 : -1.2]);
+  return (
+    <motion.li ref={ref} style={{ y, opacity: o, rotate: r }} className="relative flex flex-col">
+      <div className="sticker-card flex-1 rounded-b-2xl rounded-t-[999px] px-6 pb-6 pt-14 text-center">
+        <p className="font-display text-4xl leading-none text-inksoft">†</p>
+        <p className="micro mt-2 text-inksoft">r.i.p. · v{i + 1}</p>
+        <h4 className="mt-2 font-display text-xl font-extrabold leading-tight">{g.title}</h4>
+        <p className="mt-3 text-sm leading-snug text-coral">
+          <span className="micro mr-1">died:</span>
+          {g.died}
+        </p>
+        <p className="mt-2 text-sm leading-snug text-teal">
+          <span className="micro mr-1">renovation:</span>
+          {g.fix}
+        </p>
+      </div>
+      <div className="mx-[-10px] mt-[-2px] h-4 rounded-full border-[3px] border-line bg-mint/60" aria-hidden />
+    </motion.li>
+  );
+}
 
 export default function SecretLab() {
   const zone = useRef<HTMLDivElement>(null);
@@ -102,138 +130,59 @@ export default function SecretLab() {
   const currentEmotionData = cypherEmotionsMap[emotion] ?? cypherEmotionsMap.smirk;
 
   return (
-    <section id="lab" className="mx-auto w-[min(1150px,92vw)] py-14 md:py-20">
-      <SectionHead
-        kicker="08 · the secret lab"
-        parts={[{ t: "Failures, toys &" }, { t: "mascot hardware.", c: "shimmer-coral" }]}
-        sub="Failures are just renovations for character. Here lie the renovations. Also: draggable toys. Engineers need both."
-      />
+    <Band id="lab" tint="navy" strength={14} className="mt-8 pb-20 pt-20">
+      <div className="mx-auto w-[min(1150px,92vw)]">
+        <SectionHead
+          kicker="08 · the secret lab"
+          parts={[{ t: "Failures, toys &" }, { t: "mascot hardware.", c: "shimmer-coral" }]}
+          sub="Failures are just renovations for character. Poke the fox, throw some stickers, then go see what died."
+        />
 
-      <div className="mt-12 grid grid-cols-1 gap-7 lg:grid-cols-2">
-        <div className="space-y-7">
-          <Reveal>
+        {/* ---------- stage ---------- */}
+        <Reveal variant="tilt">
+          <div className="sticker-card relative mt-14 grid overflow-hidden lg:grid-cols-[1fr_1.05fr]">
             <div
-              ref={zone}
-              className="sticker-card relative h-[340px] overflow-hidden p-6"
+              className="relative flex min-h-[460px] flex-col items-center justify-end overflow-hidden border-b-[3px] border-line pb-10 lg:border-b-0 lg:border-r-[3px]"
+              style={{
+                background:
+                  "radial-gradient(ellipse 70% 60% at 50% 78%, color-mix(in srgb, var(--amber) 38%, transparent), transparent 70%), radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--teal) 25%, transparent), transparent 55%)",
+              }}
             >
-              <p className="micro text-inksoft">sticker drawer — drag & throw them (seriously)</p>
-              <Sticker rotate={-8} style={{ left: "12%", top: "30%" }} constraints={zone}>
-                <PawIcon size={58} />
-              </Sticker>
-              <Sticker rotate={10} style={{ left: "45%", top: "24%" }} constraints={zone}>
-                <ChipIcon size={58} />
-              </Sticker>
-              <Sticker rotate={-4} style={{ left: "72%", top: "52%" }} constraints={zone}>
-                <SparkleIcon size={50} />
-              </Sticker>
-              <Sticker rotate={14} style={{ left: "28%", top: "64%" }} constraints={zone}>
-                <BoltIcon size={50} />
-              </Sticker>
+              <p className="micro absolute left-5 top-4 text-teal">cypher emotion lab · {cypherEmotions.length} moods</p>
+              <div className={`relative z-10 pt-16 ${party ? "party-dance" : "float-soft"}`}>
+                <CypherMascot emotion={emotion} size={290} interactive showSpeech speechText={speech} onPoke={poke} lighting="lab" />
+              </div>
+              <div className="absolute bottom-6 left-1/2 h-8 w-[70%] -translate-x-1/2 rounded-[100%] bg-black/35 blur-xl" aria-hidden />
             </div>
-          </Reveal>
 
-          <Reveal delay={0.08}>
-            <article className="sticker-card px-6 py-6">
-              <p className="micro text-inksoft">the renovation graveyard — root-cause post-mortems</p>
-              <h3 className="mt-1 font-display text-2xl font-extrabold">R.I.P. these designs</h3>
-              <ul className="mt-4 space-y-5">
-                {graveyard.map((g) => (
-                  <li key={g.title} className="rounded-2xl border-2 border-dashed border-inksoft/40 px-4 py-3">
-                    <p className="font-display text-lg font-extrabold">† {g.title}</p>
-                    <p className="mt-1 text-sm text-coral">died: {g.died}</p>
-                    <p className="mt-1 text-sm text-teal">renovation: {g.fix}</p>
-                  </li>
-                ))}
-              </ul>
-            </article>
-          </Reveal>
-
-          <Reveal delay={0.12}>
-            <article className="sticker-card circuit px-6 py-6">
-              <p className="micro text-amber">{fursuitRnd.status}</p>
-              <h3 className="mt-1 font-display text-2xl font-extrabold">Biomechatronics R&D (Fursuit Cortex)</h3>
-              <p className="mt-2 text-inksoft">{fursuitRnd.blurb}</p>
-              <ul className="mt-3 space-y-1 text-inksoft">
-                {fursuitRnd.points.map((p) => (
-                  <li key={p} className="flex gap-2">
-                    <span className="text-teal">▸</span>
-                    <span>{p}</span>
-                  </li>
-                ))}
-              </ul>
-            </article>
-          </Reveal>
-        </div>
-
-        {/* Right column: Interactive Cypher Emotion Lab */}
-        <div className="space-y-7">
-          <Reveal delay={0.06}>
-            <div className="sticker-card flex flex-col items-center gap-6 p-6 md:p-8">
-              <div className="w-full flex items-center justify-between border-b border-line/15 pb-3">
-                <div>
-                  <span className="micro text-teal font-bold">CYPHER EMOTION LAB</span>
-                  <h3 className="font-display text-xl font-extrabold text-ink mt-0.5">
-                    Real Character Art Engine
-                  </h3>
-                </div>
-                <span className="micro px-3 py-1 rounded-full border-2 border-line bg-card font-mono text-xs font-bold text-amber">
-                  14 MOODS
-                </span>
+            <div className="flex flex-col gap-5 p-6 md:p-8">
+              <div className="flex items-center justify-between">
+                <p className="micro text-inksoft">pick a mood — smooth morph</p>
+                <button onClick={randomVibe} className="font-mono text-[0.7rem] font-bold uppercase text-teal hover:underline">
+                  🎲 random vibe
+                </button>
+              </div>
+              <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+                {cypherEmotions.map((e) => {
+                  const active = e.id === emotion;
+                  return (
+                    <button
+                      key={e.id}
+                      onClick={() => selectEmotion(e.id)}
+                      className={`flex items-center justify-between rounded-xl border-2 px-3 py-2 text-left transition-all ${
+                        active
+                          ? "scale-[1.03] border-line bg-teal/25 text-ink shadow-[2px_2px_0_var(--shadowc)]"
+                          : "border-line/40 bg-card text-inksoft hover:border-line hover:text-ink"
+                      }`}
+                    >
+                      <span className="truncate font-sans text-xs font-bold">{e.name}</span>
+                      <span className="ml-1 shrink-0 font-mono text-[0.58rem] uppercase opacity-70">{e.tag}</span>
+                    </button>
+                  );
+                })}
               </div>
 
-              {/* Character Presentation & Speech */}
-              <div className="relative flex flex-col items-center justify-center w-full pt-16">
-                <div className={`float-soft ${party ? "party-dance" : ""}`}>
-                  <CypherMascot
-                    emotion={emotion}
-                    size={270}
-                    interactive
-                    showSpeech
-                    speechText={speech}
-                    onPoke={poke}
-                    lighting="lab"
-                  />
-                </div>
-              </div>
-
-              {/* Emotion Selector Matrix */}
-              <div className="w-full mt-2">
-                <div className="flex items-center justify-between mb-2">
-                  <p className="micro text-inksoft">SELECT CYPHER&apos;S MOOD (SMOOTH MORPH):</p>
-                  <button
-                    onClick={randomVibe}
-                    className="font-mono text-[0.7rem] font-bold text-teal hover:underline uppercase"
-                  >
-                    🎲 random vibe
-                  </button>
-                </div>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                  {cypherEmotions.map((e) => {
-                    const active = e.id === emotion;
-                    return (
-                      <button
-                        key={e.id}
-                        onClick={() => selectEmotion(e.id)}
-                        className={`flex items-center justify-between px-3 py-2 rounded-xl border-2 transition-all text-left ${
-                          active
-                            ? "border-line bg-teal/20 text-ink shadow-[2px_2px_0_var(--shadowc)] scale-[1.02]"
-                            : "border-line/40 bg-card hover:border-line hover:bg-bg2/60 text-inksoft hover:text-ink"
-                        }`}
-                      >
-                        <span className="font-sans text-xs font-bold truncate">
-                          {e.name}
-                        </span>
-                        <span className="font-mono text-[0.62rem] opacity-70 ml-1 shrink-0 uppercase">
-                          {e.tag}
-                        </span>
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-
-              {/* Action Controls */}
-              <div className="flex flex-wrap justify-center gap-3 pt-2 w-full border-t border-line/10">
+              <div className="flex flex-wrap gap-3 border-t-2 border-line/10 pt-5">
                 <button className="btn-squish btn-coral" data-boing onClick={poke}>
                   poke the fox
                 </button>
@@ -247,23 +196,89 @@ export default function SecretLab() {
                   ↑↑↓↓←→←→BA
                 </button>
               </div>
-
-              <p className="micro text-inksoft text-center">
-                (konami code also works directly on your keyboard. we don&apos;t judge.)
-              </p>
+              <p className="micro text-[0.62rem] text-inksoft">(the konami code works on your keyboard too. we don&apos;t judge.)</p>
 
               {fortune ? (
-                <div className="w-full rounded-2xl border-2 border-dashed border-inksoft/40 bg-bg/40 px-4 py-3 text-center">
-                  <span className="micro text-amber font-bold block mb-1">FOX FORTUNE COOKIE</span>
-                  <p className="font-sans text-sm text-ink font-medium italic">
-                    “{fortune}”
-                  </p>
+                <div className="rounded-2xl border-2 border-dashed border-inksoft/40 bg-bg/40 px-4 py-3">
+                  <span className="micro mb-1 block font-bold text-amber">fox fortune cookie</span>
+                  <p className="text-sm font-medium italic text-ink">“{fortune}”</p>
                 </div>
               ) : null}
             </div>
-          </Reveal>
+          </div>
+        </Reveal>
+
+        {/* ---------- sticker table ---------- */}
+        <Reveal>
+          <div
+            ref={zone}
+            className="relative mt-16 h-[360px] overflow-hidden rounded-[28px] border-[3px] border-dashed border-line/60"
+            style={{
+              backgroundImage: "radial-gradient(color-mix(in srgb, var(--ink) 18%, transparent) 1.5px, transparent 1.5px)",
+              backgroundSize: "26px 26px",
+            }}
+          >
+            <p className="micro absolute left-5 top-4 text-inksoft">sticker table — drag, fling, repeat</p>
+            <Sticker rotate={-8} style={{ left: "8%", top: "30%" }} constraints={zone}>
+              <PawIcon size={74} />
+            </Sticker>
+            <Sticker rotate={10} style={{ left: "30%", top: "20%" }} constraints={zone}>
+              <ChipIcon size={70} />
+            </Sticker>
+            <Sticker rotate={-4} style={{ left: "52%", top: "48%" }} constraints={zone}>
+              <SparkleIcon size={64} />
+            </Sticker>
+            <Sticker rotate={14} style={{ left: "70%", top: "18%" }} constraints={zone}>
+              <BoltIcon size={64} />
+            </Sticker>
+            <Sticker rotate={-12} style={{ left: "84%", top: "58%" }} constraints={zone}>
+              <PawIcon size={52} />
+            </Sticker>
+            <Sticker rotate={6} style={{ left: "18%", top: "62%" }} constraints={zone}>
+              <SparkleIcon size={48} />
+            </Sticker>
+          </div>
+        </Reveal>
+
+        {/* ---------- graveyard ---------- */}
+        <div className="mt-24">
+          <p className="micro text-inksoft">the renovation graveyard — root-cause post-mortems</p>
+          <h3 className="mt-2 font-display text-[clamp(2rem,4.6vw,3.6rem)] font-extrabold leading-none">
+            R.I.P. these <span className="shimmer-coral">designs</span>.
+          </h3>
+          <ul className="mt-14 grid gap-10 md:grid-cols-3 md:gap-8">
+            {graveyard.map((g, i) => (
+              <Tomb key={g.title} g={g} i={i} />
+            ))}
+          </ul>
         </div>
+
+        {/* ---------- blueprint ---------- */}
+        <Reveal variant="left">
+          <article
+            className="relative mt-24 overflow-hidden rounded-[28px] border-[3px] border-dashed border-teal px-6 py-8 md:px-10"
+            style={{
+              backgroundImage:
+                "linear-gradient(color-mix(in srgb, var(--teal) 14%, transparent) 1px, transparent 1px), linear-gradient(90deg, color-mix(in srgb, var(--teal) 14%, transparent) 1px, transparent 1px)",
+              backgroundSize: "30px 30px",
+            }}
+          >
+            <p className="micro text-amber">{fursuitRnd.status}</p>
+            <h3 className="mt-2 font-display text-[clamp(1.6rem,3vw,2.4rem)] font-extrabold leading-tight">
+              Biomechatronics R&amp;D (Fursuit Cortex)
+            </h3>
+            <p className="mt-3 max-w-2xl text-inksoft">{fursuitRnd.blurb}</p>
+            <ul className="mt-5 flex flex-wrap gap-2">
+              {fursuitRnd.points.map((p) => (
+                <li key={p} className="micro flex items-center gap-2 rounded-full border-2 border-line bg-card px-3.5 py-1.5 text-[0.65rem]">
+                  <span className="blink-dot inline-block h-2 w-2 rounded-full bg-teal" />
+                  {p}
+                </li>
+              ))}
+            </ul>
+          </article>
+        </Reveal>
       </div>
-    </section>
+    </Band>
   );
 }
