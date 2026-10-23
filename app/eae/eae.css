@@ -1,0 +1,136 @@
+/* /eae — application portfolio. Scoped to .eae so nothing leaks into the main site. */
+
+.eae {
+  --bg: #f2eee4;
+  --bg2: #e7e1d1;
+  --ink: #111111;
+  --inksoft: #58554c;
+  --coral: #ff4a1c;
+  --amber: #ff4a1c;
+  --teal: #1f3dd1;
+  --mint: #1f3dd1;
+  --navy: #1f3dd1;
+  --card: #faf7ef;
+  --line: #111111;
+  --shadowc: rgba(17, 17, 17, 0.16);
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-eae-sans), system-ui, sans-serif;
+  min-height: 100vh;
+  position: relative;
+}
+.eae.eae-dark,
+.eae .eae-dark {
+  --bg: #0b0b0c;
+  --bg2: #151517;
+  --ink: #f2eee4;
+  --inksoft: #a29e92;
+  --card: #18181a;
+  --line: #f2eee4;
+  --shadowc: rgba(0, 0, 0, 0.5);
+  background: var(--bg);
+  color: var(--ink);
+}
+
+html:has(.eae) {
+  --bg2: #e7e1d1;
+  --coral: #ff4a1c;
+  --line: #111111;
+  --amber: #ff4a1c;
+  scrollbar-color: #ff4a1c #e7e1d1;
+}
+html:has(.eae) body {
+  background: #f2eee4;
+}
+
+.eae h1,
+.eae h2,
+.eae h3,
+.eae .serif {
+  font-family: var(--font-eae-serif), Georgia, serif;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+.eae .serif-i {
+  font-family: var(--font-eae-serif), Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+}
+.eae ::selection {
+  background: #ff4a1c;
+  color: #111;
+}
+
+/* blueprint grid */
+.eae .blueprint {
+  background-image:
+    linear-gradient(to right, color-mix(in srgb, var(--ink) 9%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--ink) 9%, transparent) 1px, transparent 1px);
+  background-size: 72px 72px;
+}
+
+/* rows that flood with signal colour on hover */
+.eae .row-sweep {
+  position: relative;
+  isolation: isolate;
+}
+.eae .row-sweep::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--coral);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.5s cubic-bezier(0.7, 0, 0.2, 1);
+}
+.eae .row-sweep:hover::before,
+.eae .row-sweep:focus-visible::before {
+  transform: scaleY(1);
+}
+.eae .row-sweep:hover,
+.eae .row-sweep:focus-visible {
+  color: #111;
+}
+.eae .row-sweep:hover .soft,
+.eae .row-sweep:focus-visible .soft {
+  color: #111;
+}
+
+.eae .outline-text {
+  -webkit-text-stroke: 1.5px var(--ink);
+  color: transparent;
+}
+
+@keyframes eae-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.eae .spin-slow {
+  animation: eae-spin 90s linear infinite;
+}
+@keyframes eae-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+.eae .blink {
+  animation: eae-pulse 1.6s ease-in-out infinite;
+}
+
+@media (hover: none) {
+  .eae .eae-cursor {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .eae .spin-slow,
+  .eae .blink {
+    animation: none;
+  }
+}
