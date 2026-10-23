@@ -7,7 +7,8 @@ import Record from "@/components/eae/Record";
 import Work from "@/components/eae/Work";
 import Craft from "@/components/eae/Craft";
 import Team from "@/components/eae/Team";
-import Finale from "@/components/eae/Finale";
+import Next from "@/components/eae/Next";
+import Contact from "@/components/eae/Contact";
 
 export default function EaePage() {
   return (
@@ -22,7 +23,8 @@ export default function EaePage() {
         <Work />
         <Craft />
         <Team />
-        <Finale />
+        <Next />
+        <Contact />
       </main>
     </>
   );

@@ -56,12 +56,16 @@ export default function EaeChrome() {
     return () => io.disconnect();
   }, []);
 
+  // header ink follows the section underneath it (no blend modes, so it stays legible on orange)
+  const light = ["cortex", "craft", "team", "contact"].includes(active);
+  const tone = light ? "#f2eee4" : "#111111";
+
   return (
     <>
       <motion.div className="fixed inset-x-0 top-0 z-[100] h-[3px] origin-left bg-coral" style={{ scaleX }} aria-hidden />
 
-      <header className="pointer-events-none fixed inset-x-0 top-0 z-[90] mix-blend-difference">
-        <div className="mx-auto flex h-16 w-[min(1400px,92vw)] items-center justify-between text-white">
+      <header className="pointer-events-none fixed inset-x-0 top-0 z-[90]" style={{ color: tone, transition: "color .4s" }}>
+        <div className="mx-auto flex h-16 w-[min(1400px,92vw)] items-center justify-between">
           <a href="#top" className="pointer-events-auto micro font-bold tracking-[0.2em]">
             {eaeMeta.name} <span className="opacity-60">— portfolio</span>
           </a>
@@ -70,11 +74,11 @@ export default function EaeChrome() {
               <a
                 key={s.id}
                 href={`#${s.id}`}
-                className={`micro flex items-center gap-1.5 transition-opacity ${active === s.id ? "opacity-100" : "opacity-50 hover:opacity-100"}`}
+                className={`micro flex items-center gap-1.5 transition-opacity ${active === s.id ? "opacity-100" : "opacity-55 hover:opacity-100"}`}
               >
                 <span className="text-[0.55rem]">{String(i + 1).padStart(2, "0")}</span>
                 {s.label}
-                {active === s.id ? <span className="h-1.5 w-1.5 rounded-full bg-white" /> : null}
+                {active === s.id ? <span className="h-1.5 w-1.5 rounded-full bg-current" /> : null}
               </a>
             ))}
           </nav>
@@ -84,7 +88,18 @@ export default function EaeChrome() {
         </div>
       </header>
 
-      <div className="pointer-events-none fixed bottom-4 left-[4vw] z-[90] hidden text-white mix-blend-difference sm:block" aria-hidden>
+      <div
+        className="pointer-events-none fixed left-3 top-1/2 z-[90] hidden -translate-y-1/2 xl:block"
+        style={{ color: tone, transition: "color .4s",  writingMode: "vertical-rl", transform: "translateY(-50%) rotate(180deg)" }}
+        aria-hidden
+      >
+        <p className="micro text-[0.6rem] tracking-[0.3em] opacity-80">
+          {String(Math.max(0, sections.findIndex((s) => s.id === active)) + 1).padStart(2, "0")} / 08 —{" "}
+          {(sections.find((s) => s.id === active)?.label ?? "Cover").toUpperCase()}
+        </p>
+      </div>
+
+      <div className="pointer-events-none fixed bottom-4 left-[4vw] z-[90] hidden sm:block" style={{ color: tone, transition: "color .4s" }} aria-hidden>
         <p className="micro text-[0.6rem] opacity-80">
           xy <span ref={coords}>0000 / 0000</span>
         </p>
@@ -92,7 +107,7 @@ export default function EaeChrome() {
           scroll <span ref={pct}>000</span>%
         </p>
       </div>
-      <div className="pointer-events-none fixed bottom-4 right-[4vw] z-[90] hidden text-white mix-blend-difference sm:block" aria-hidden>
+      <div className="pointer-events-none fixed bottom-4 right-[4vw] z-[90] hidden sm:block" style={{ color: tone, transition: "color .4s" }} aria-hidden>
         <p className="micro blink text-[0.6rem]">● live document · {eaeMeta.location}</p>
       </div>
 

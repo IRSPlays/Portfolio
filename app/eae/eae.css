@@ -32,6 +32,34 @@
   color: var(--ink);
 }
 
+.eae.eae-signal,
+.eae .eae-signal {
+  --bg: #ff4a1c;
+  --bg2: #e63e12;
+  --ink: #111111;
+  --inksoft: rgba(17, 17, 17, 0.72);
+  --coral: #111111;
+  --amber: #111111;
+  --card: #ff6a40;
+  --line: #111111;
+  --shadowc: rgba(17, 17, 17, 0.25);
+  background: var(--bg);
+  color: var(--ink);
+}
+.eae .eae-blue {
+  --bg: #1f3dd1;
+  --bg2: #1a33b3;
+  --ink: #f2eee4;
+  --inksoft: #b9c3f2;
+  --coral: #ff4a1c;
+  --amber: #ff4a1c;
+  --card: #2a49e0;
+  --line: #f2eee4;
+  --shadowc: rgba(0, 0, 0, 0.35);
+  background: var(--bg);
+  color: var(--ink);
+}
+
 html:has(.eae) {
   --bg2: #e7e1d1;
   --coral: #ff4a1c;

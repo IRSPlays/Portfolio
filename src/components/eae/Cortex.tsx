@@ -4,6 +4,7 @@ import Image from "next/image";
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "framer-motion";
 import { useRef, useState } from "react";
 import Eyebrow from "@/components/eae/Eyebrow";
+import Handoff from "@/components/eae/Handoff";
 import SplitText from "@/components/motion/SplitText";
 import { cortexSteps } from "@/data/eae";
 
@@ -128,6 +129,7 @@ export default function Cortex() {
           </article>
         ))}
       </div>
+      <Handoff parts={[{ t: "A year like that" }, { t: "leaves a record.", c: "serif-i text-coral" }]} />
     </section>
   );
 }

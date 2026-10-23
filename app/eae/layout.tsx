@@ -17,6 +17,11 @@ export const metadata: Metadata = {
   title: "Haziq Shah — Portfolio · Early Admissions Exercise",
   description:
     "Haziq Shah's portfolio: assistive technology, edge AI and embedded systems — Asirive Cortex, TKKYIA 2026 Merit Award, and a year of co-design with SAVH.",
+  icons: {
+    icon: [{ url: "/eae-icon.png", sizes: "256x256", type: "image/png" }],
+    shortcut: "/eae-icon.png",
+    apple: "/eae-icon.png",
+  },
   openGraph: {
     title: "Haziq Shah — Portfolio",
     description: "Assistive technology, edge AI and embedded systems.",
