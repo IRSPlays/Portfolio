@@ -15,7 +15,6 @@ import Contact from "@/components/Contact";
 import Preloader from "@/components/motion/Preloader";
 import WorldBackground from "@/components/motion/WorldBackground";
 import ScrollProgress from "@/components/motion/ScrollProgress";
-import CypherWalker from "@/components/motion/CypherWalker";
 import Bridge from "@/components/motion/Bridge";
 
 export default function Home() {
@@ -27,7 +26,6 @@ export default function Home() {
       <PawCursor />
       <SoundFX />
       <ScrollProgress />
-      <CypherWalker />
       <SiteNav />
       <main>
         <Hero />

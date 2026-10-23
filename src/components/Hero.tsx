@@ -82,10 +82,6 @@ export default function Hero() {
 
   return (
     <section ref={section} id="top" className="relative flex min-h-[92vh] items-center overflow-hidden pb-10 pt-28">
-      <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
-        <div className="absolute -top-32 right-[-10%] h-[520px] w-[520px] rounded-full bg-amber/25 blur-3xl" />
-        <div className="absolute bottom-[-20%] left-[-8%] h-[440px] w-[440px] rounded-full bg-teal/20 blur-3xl" />
-      </div>
       {show3d ? (
         <motion.div style={{ y: sceneY }} className="pointer-events-none absolute inset-0 opacity-70 md:opacity-90">
           <HeroScene />

@@ -67,9 +67,9 @@ export default function SiteNav() {
             <a href="#top" className="group flex items-center gap-3" aria-label="Back to top">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/cypher-chibi.png"
+                src="/cypher/pfp.jpg"
                 alt=""
-                className="h-9 w-auto transition-transform duration-300 group-hover:-rotate-12 group-hover:scale-110"
+                className="h-10 w-10 rounded-full border-[3px] border-line object-cover shadow-[2px_3px_0_var(--shadowc)] transition-transform duration-300 group-hover:-rotate-6 group-hover:scale-110"
               />
               <span className="leading-none">
                 <span className="block font-display text-lg font-extrabold tracking-tight">Haziq</span>

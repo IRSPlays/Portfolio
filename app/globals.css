@@ -53,6 +53,23 @@
 
 html {
   scroll-behavior: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--coral) var(--bg2);
+}
+::-webkit-scrollbar {
+  width: 14px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg2);
+  border-left: 3px solid var(--line);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--coral);
+  border: 3px solid var(--line);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--amber);
 }
 html.lenis, html.lenis body {
   height: auto;

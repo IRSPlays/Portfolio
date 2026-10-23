@@ -37,8 +37,8 @@ function SgClock() {
 export default function SiteFooter() {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end end"] });
-  const peek = useTransform(scrollYProgress, [0.35, 1], [90, 0]);
-  const word = useTransform(scrollYProgress, [0, 1], ["-6%", "0%"]);
+  const peek = useTransform(scrollYProgress, [0.4, 1], [40, 0]);
+  const word = useTransform(scrollYProgress, [0, 1], ["-4%", "0%"]);
 
   const toTop = () => {
     boing();
@@ -115,13 +115,19 @@ export default function SiteFooter() {
       </div>
 
       <div className="relative select-none">
-        <motion.div style={{ y: peek }} className="pointer-events-none absolute bottom-[34%] right-[8%] z-10 hidden md:block" aria-hidden>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/cypher/thankful.png" alt="" className="h-40 w-auto" />
+        <motion.div
+          style={{ y: peek }}
+          className="pointer-events-none absolute bottom-[10%] right-[2.5vw] z-10 hidden lg:block"
+          aria-hidden
+        >
+          <motion.div animate={{ y: [0, -8, 0] }} transition={{ duration: 3.4, repeat: Infinity, ease: "easeInOut" }}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/cypher/thankful.png" alt="" className="h-[clamp(7rem,12vw,11rem)] w-auto" />
+          </motion.div>
         </motion.div>
         <motion.p
           style={{ x: word, WebkitTextStroke: "2px var(--bg)" }}
-          className="whitespace-nowrap px-[2vw] pb-2 font-display text-[clamp(6rem,27vw,26rem)] font-extrabold uppercase leading-[0.78] tracking-[-0.05em] text-transparent transition-colors duration-500 hover:text-bg"
+          className="whitespace-nowrap px-[2vw] pb-2 font-display text-[clamp(6rem,24vw,24rem)] font-extrabold uppercase leading-[0.78] tracking-[-0.05em] text-transparent transition-colors duration-500 hover:text-bg"
         >
           Haziq
         </motion.p>
