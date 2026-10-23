@@ -69,77 +69,83 @@ export default function StackJudge({
   };
 
   return (
-    <div className="max-w-[420px]">
+    <div className="w-full max-w-[420px]">
       <motion.button
-        className="sticker-card px-4 py-3 text-left w-full"
+        className="sticker-card flex w-full items-center justify-between gap-3 px-4 py-2.5 text-left"
         data-boing
         onClick={() => setOpen((v) => !v)}
-        whileHover={{ scale: 1.03, rotate: -1 }}
-        whileTap={{ scale: 0.95, rotate: 1.5 }}
+        whileTap={{ scale: 0.97 }}
         aria-expanded={open}
       >
-        <span className="micro font-bold text-ink">
-          THAT&apos;S CYPHER. HE JUDGES YOUR STACK. (tap)
-        </span>
+        <span className="micro font-bold text-ink">That&apos;s Cypher. He judges your stack.</span>
+        <motion.span animate={{ rotate: open ? 180 : 0 }} className="font-mono text-sm font-bold text-coral" aria-hidden>
+          ▾
+        </motion.span>
       </motion.button>
 
-      <AnimatePresence>
+      <AnimatePresence initial={false}>
         {open ? (
           <motion.div
-            className="sticker-card mt-3 p-4"
-            initial={{ opacity: 0, y: -12, scale: 0.96 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -8, scale: 0.97 }}
-            transition={{ type: "spring", stiffness: 260, damping: 20 }}
+            className="overflow-hidden"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
           >
-            <p className="micro text-inksoft">stack judge v0.fox — type or tap a tech</p>
-            <form
-              className="mt-2 flex gap-2"
-              onSubmit={(e) => {
-                e.preventDefault();
-                submit(value);
-              }}
-            >
-              <input
-                value={value}
-                onChange={(e) => setValue(e.target.value)}
-                placeholder="e.g. Electron"
-                aria-label="Technology to judge"
-                className="min-w-0 flex-1 rounded-full border-[3px] border-line bg-bg px-4 py-2 font-mono text-sm outline-none focus:border-teal"
-              />
-              <button type="submit" className="btn-squish btn-solid px-4 py-2 text-xs">
-                judge
-              </button>
-            </form>
-            <div className="mt-3 flex flex-wrap gap-1.5">
-              {pills.map((p) => (
-                <button
-                  key={p}
-                  onClick={() => submit(p)}
-                  className="font-mono text-xs rounded-full border-2 border-line px-2.5 py-1 bg-card hover:bg-bg2 transition-transform hover:scale-105 active:scale-95"
-                >
-                  {p}
+            <div className="mt-2.5 rounded-2xl border-[3px] border-line bg-card p-3 shadow-[4px_5px_0_var(--shadowc)]">
+              <form
+                className="flex gap-2"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  submit(value);
+                }}
+              >
+                <input
+                  value={value}
+                  onChange={(e) => setValue(e.target.value)}
+                  placeholder="type a tech… e.g. Electron"
+                  aria-label="Technology to judge"
+                  className="min-w-0 flex-1 rounded-full border-2 border-line bg-bg px-3.5 py-1.5 font-mono text-sm outline-none focus:border-teal"
+                />
+                <button type="submit" className="rounded-full border-2 border-line bg-teal px-3.5 py-1.5 font-mono text-xs font-bold uppercase tracking-wider text-bg transition-transform hover:-translate-y-0.5 active:scale-95">
+                  judge
                 </button>
-              ))}
+              </form>
+
+              <div className="no-scrollbar -mx-1 mt-2.5 flex gap-1.5 overflow-x-auto px-1 pb-1">
+                {pills.map((p) => (
+                  <button
+                    key={p}
+                    onClick={() => submit(p)}
+                    className="shrink-0 rounded-full border-2 border-line bg-bg px-2.5 py-0.5 font-mono text-xs transition-transform hover:-translate-y-0.5 active:scale-95"
+                  >
+                    {p}
+                  </button>
+                ))}
+              </div>
+
+              <div className="mt-2 flex h-10 items-center justify-between gap-3 rounded-xl border-2 border-dashed border-line/40 px-3">
+                <AnimatePresence mode="wait" initial={false}>
+                  {verdict ? (
+                    <motion.div
+                      key={verdict.query + verdict.score}
+                      className="flex w-full items-baseline justify-between gap-3"
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -8 }}
+                      transition={{ duration: 0.18 }}
+                    >
+                      <p className="min-w-0 truncate font-display text-base font-extrabold">{verdict.query}</p>
+                      <p className="shrink-0 font-display text-xl font-extrabold text-coral">{verdict.score}</p>
+                    </motion.div>
+                  ) : (
+                    <motion.p key="idle" className="micro text-inksoft" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                      pick a tech — Cypher answers up top
+                    </motion.p>
+                  )}
+                </AnimatePresence>
+              </div>
             </div>
-            <AnimatePresence mode="wait">
-              {verdict ? (
-                <motion.div
-                  key={verdict.query + verdict.score}
-                  className="mt-4 rounded-2xl border-[3px] border-line bg-bg p-4"
-                  initial={{ opacity: 0, scale: 0.9, rotate: -1.5 }}
-                  animate={{ opacity: 1, scale: 1, rotate: 0 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ type: "spring", stiffness: 300, damping: 18 }}
-                >
-                  <div className="flex items-baseline justify-between gap-3">
-                    <p className="font-display text-lg font-extrabold">{verdict.query}</p>
-                    <p className="font-display text-2xl font-extrabold text-coral">{verdict.score}</p>
-                  </div>
-                  <p className="mt-1 text-sm text-inksoft leading-relaxed">{verdict.line}</p>
-                </motion.div>
-              ) : null}
-            </AnimatePresence>
           </motion.div>
         ) : null}
       </AnimatePresence>

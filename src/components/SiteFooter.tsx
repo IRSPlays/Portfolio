@@ -114,23 +114,20 @@ export default function SiteFooter() {
         </div>
       </div>
 
-      <div className="relative select-none">
-        <motion.div
-          style={{ y: peek }}
-          className="pointer-events-none absolute bottom-[10%] right-[2.5vw] z-10 hidden lg:block"
-          aria-hidden
-        >
-          <motion.div animate={{ y: [0, -8, 0] }} transition={{ duration: 3.4, repeat: Infinity, ease: "easeInOut" }}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/cypher/thankful.png" alt="" className="h-[clamp(7rem,12vw,11rem)] w-auto" />
-          </motion.div>
-        </motion.div>
+      <div className="flex select-none items-end">
         <motion.p
           style={{ x: word, WebkitTextStroke: "2px var(--bg)" }}
-          className="whitespace-nowrap px-[2vw] pb-2 font-display text-[clamp(6rem,24vw,24rem)] font-extrabold uppercase leading-[0.78] tracking-[-0.05em] text-transparent transition-colors duration-500 hover:text-bg"
+          className="shrink-0 whitespace-nowrap px-[2vw] pb-2 font-display text-[clamp(6rem,24vw,24rem)] font-extrabold uppercase leading-[0.78] tracking-[-0.05em] text-transparent transition-colors duration-500 hover:text-bg"
         >
           Haziq
         </motion.p>
+        {/* centred in the gap between the Q and the right edge */}
+        <motion.div style={{ y: peek }} className="pointer-events-none hidden flex-1 justify-center pb-[2vw] lg:flex" aria-hidden>
+          <motion.div animate={{ y: [0, -8, 0] }} transition={{ duration: 3.4, repeat: Infinity, ease: "easeInOut" }}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/cypher/thankful.png" alt="" className="h-[clamp(6rem,11vw,10rem)] w-auto" />
+          </motion.div>
+        </motion.div>
       </div>
 
       <div className="border-t-2 border-bg/20">
