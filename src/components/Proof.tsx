@@ -6,7 +6,7 @@ import { awards, testimonials } from "@/data/content";
 
 export default function Proof() {
   return (
-    <section id="proof" className="mx-auto w-[min(1150px,92vw)] py-28">
+    <section id="proof" className="mx-auto w-[min(1150px,92vw)] py-14 md:py-20">
       <SectionHead
         kicker="04 · receipts"
         parts={[{ t: "Awards, field trials &" }, { t: "kind words.", c: "shimmer-teal" }]}

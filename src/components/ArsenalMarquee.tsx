@@ -25,7 +25,7 @@ export default function ArsenalMarquee() {
   const skew = useTransform(smooth, (v) => Math.max(-3, Math.min(3, v / 260)));
 
   return (
-    <section id="arsenal" className="py-28">
+    <section id="arsenal" className="py-14 md:py-20">
       <div className="mx-auto w-[min(1150px,92vw)]">
         <SectionHead
           kicker="05 · technical arsenal"

@@ -10,11 +10,10 @@ type Offset = NonNullable<Parameters<typeof useScroll>[0]>["offset"];
 function Word({ word, i, n, progress, cls }: { word: string; i: number; n: number; progress: MotionValue<number>; cls?: string }) {
   const start = (i / n) * 0.72;
   const end = Math.min(1, start + 0.28);
-  const opacity = useTransform(progress, [start, end], [0.1, 1]);
+  const opacity = useTransform(progress, [start, end], [0.14, 1]);
   const y = useTransform(progress, [start, end], [14, 0]);
-  const blur = useTransform(progress, [start, end], ["blur(4px)", "blur(0px)"]);
   return (
-    <motion.span style={{ opacity, y, filter: blur }} className={`inline-block ${cls ?? ""}`}>
+    <motion.span style={{ opacity, y }} className={`inline-block ${cls ?? ""}`}>
       {word}
     </motion.span>
   );

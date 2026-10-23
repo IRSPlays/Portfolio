@@ -187,7 +187,7 @@ export default function ProjectGrid() {
   const x = useTransform(scrollYProgress, [0, 1], [0, -dist]);
 
   return (
-    <section id="projects" className="py-28">
+    <section id="projects" className="py-14 md:py-20">
       <div className="mx-auto w-[min(1150px,92vw)]">
         <SectionHead
           kicker="06 · the build pile"

@@ -26,10 +26,10 @@ export default function SectionHead({
           aria-hidden
         />
       </div>
-      <SplitText as="h2" parts={parts} className="mt-3 text-[clamp(2.6rem,7vw,5.6rem)] font-extrabold leading-[0.93]" />
+      <SplitText as="h2" parts={parts} className="mt-4" />
       {sub ? (
         <Reveal delay={0.1}>
-          <p className="mt-4 max-w-2xl text-lg text-inksoft">{sub}</p>
+          <p className="lede mt-5 text-inksoft">{sub}</p>
         </Reveal>
       ) : null}
     </header>

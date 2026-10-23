@@ -70,22 +70,8 @@ html.lenis, html.lenis body {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-9px); }
 }
-.shimmer-teal, .shimmer-coral {
-  background-size: 220% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: shimmer 5s linear infinite;
-}
-.shimmer-teal {
-  background-image: linear-gradient(90deg, var(--teal), var(--mint), var(--navy), var(--teal));
-}
-.shimmer-coral {
-  background-image: linear-gradient(90deg, var(--coral), var(--amber), var(--coral));
-}
-@keyframes shimmer {
-  to { background-position: -220% 0; }
-}
+.shimmer-teal { color: var(--teal); }
+.shimmer-coral { color: var(--coral); }
 .ring-spin {
   animation: ring-spin 18s linear infinite;
 }
@@ -112,8 +98,39 @@ body {
   color: var(--bg);
 }
 
-h1, h2, h3, .font-display {
+/* ---------- typography system ---------- */
+body {
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  letter-spacing: -0.003em;
+  font-feature-settings: "kern", "liga", "calt";
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, h4, .font-display {
   font-family: var(--font-display);
+  letter-spacing: -0.028em;
+  text-wrap: balance;
+}
+h2 {
+  font-size: clamp(2.5rem, 6vw, 4.75rem);
+  line-height: 1.02;
+  font-weight: 800;
+}
+h3 {
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+}
+p, li, blockquote {
+  text-wrap: pretty;
+}
+.lede {
+  font-size: clamp(1.15rem, 1.6vw, 1.35rem);
+  line-height: 1.55;
+  max-width: 60ch;
+}
+.prose-body {
+  max-width: 62ch;
 }
 
 .micro {

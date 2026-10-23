@@ -12,7 +12,7 @@ export default function RoadToV3() {
   const lineScale = useSpring(scrollYProgress, { stiffness: 90, damping: 24 });
 
   return (
-    <section id="road" className="mx-auto w-[min(1150px,92vw)] py-28">
+    <section id="road" className="mx-auto w-[min(1150px,92vw)] py-14 md:py-20">
       <SectionHead
         kicker="02 · the road to v3"
         parts={[{ t: "One year. Three versions." }, { t: "Zero ego.", c: "shimmer-coral" }]}

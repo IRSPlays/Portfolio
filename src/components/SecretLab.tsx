@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import CypherMascot from "@/components/CypherMascot";
 import Reveal from "@/components/Reveal";
+import SectionHead from "@/components/motion/SectionHead";
 import { Sticker, PawIcon, ChipIcon, SparkleIcon, BoltIcon } from "@/components/Sticker";
 import {
   fursuitRnd,
@@ -101,16 +102,12 @@ export default function SecretLab() {
   const currentEmotionData = cypherEmotionsMap[emotion] ?? cypherEmotionsMap.smirk;
 
   return (
-    <section id="lab" className="mx-auto w-[min(1150px,92vw)] py-28">
-      <Reveal>
-        <p className="micro text-inksoft">08 · the secret lab</p>
-        <h2 className="mt-2 text-[clamp(2.4rem,6vw,4.5rem)] font-extrabold leading-[0.95]">
-          Failures, toys & <span className="text-coral">mascot hardware.</span>
-        </h2>
-        <p className="mt-3 text-inksoft">
-          Failures are just renovations for character. Here lie the renovations. Also: draggable toys. Engineers need both.
-        </p>
-      </Reveal>
+    <section id="lab" className="mx-auto w-[min(1150px,92vw)] py-14 md:py-20">
+      <SectionHead
+        kicker="08 · the secret lab"
+        parts={[{ t: "Failures, toys &" }, { t: "mascot hardware.", c: "shimmer-coral" }]}
+        sub="Failures are just renovations for character. Here lie the renovations. Also: draggable toys. Engineers need both."
+      />
 
       <div className="mt-12 grid grid-cols-1 gap-7 lg:grid-cols-2">
         <div className="space-y-7">

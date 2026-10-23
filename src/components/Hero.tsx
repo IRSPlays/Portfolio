@@ -63,8 +63,8 @@ export default function Hero() {
   const { scrollYProgress } = useScroll({ target: section, offset: ["start start", "end start"] });
   const textY = useTransform(scrollYProgress, [0, 1], [0, 140]);
   const foxY = useTransform(scrollYProgress, [0, 1], [0, -90]);
-  const fade = useTransform(scrollYProgress, [0, 0.75], [1, 0]);
-  const shrink = useTransform(scrollYProgress, [0, 1], [1, 0.9]);
+  const fade = useTransform(scrollYProgress, [0.2, 1], [1, 0.15]);
+  const shrink = useTransform(scrollYProgress, [0, 1], [1, 0.96]);
   const sceneY = useTransform(scrollYProgress, [0, 1], [0, 220]);
   const [show3d, setShow3d] = useState(false);
   const [heroEmotion, setHeroEmotion] = useState<CypherEmotionId>("smirk");
@@ -81,7 +81,7 @@ export default function Hero() {
   const letters = profile.name.toUpperCase().split("");
 
   return (
-    <section ref={section} id="top" className="relative flex min-h-screen items-center overflow-hidden pt-28">
+    <section ref={section} id="top" className="relative flex min-h-[92vh] items-center overflow-hidden pb-10 pt-28">
       <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
         <div className="absolute -top-32 right-[-10%] h-[520px] w-[520px] rounded-full bg-amber/25 blur-3xl" />
         <div className="absolute bottom-[-20%] left-[-8%] h-[440px] w-[440px] rounded-full bg-teal/20 blur-3xl" />
@@ -168,7 +168,7 @@ export default function Hero() {
             </defs>
             <circle cx="60" cy="60" r="56" fill="var(--amber)" stroke="var(--line)" strokeWidth="3" />
             <text fontSize="9.5" fontWeight="800" fill="var(--bg)" className="font-mono" letterSpacing="1.2">
-              <textPath href="#ring" textLength="272">FAILING WITH HONOUR ✦ FAILING WITH HONOUR ✦</textPath>
+              <textPath href="#ring" textLength="272">FAILING WITH HONOUR • FAILING WITH HONOUR ✦</textPath>
             </text>
           </svg>
           <motion.div

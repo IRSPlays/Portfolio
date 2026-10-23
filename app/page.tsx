@@ -16,7 +16,7 @@ import Preloader from "@/components/motion/Preloader";
 import WorldBackground from "@/components/motion/WorldBackground";
 import ScrollProgress from "@/components/motion/ScrollProgress";
 import CypherWalker from "@/components/motion/CypherWalker";
-import ChapterBreak from "@/components/motion/ChapterBreak";
+import Bridge from "@/components/motion/Bridge";
 
 export default function Home() {
   return (
@@ -31,17 +31,23 @@ export default function Home() {
       <SiteNav />
       <main>
         <Hero />
-        <ChapterBreak words={["Failing with honour", "Pain-first engineering", "Built in Singapore"]} tone="coral" />
+        <Bridge text="Enough noise." accent="Meet the human behind the fox." />
         <About />
+        <Bridge text="It didn't start polished." accent="Every version failed first." />
         <RoadToV3 />
+        <Bridge text="Version three became a company." />
         <AsiriveSpotlight />
+        <Bridge text="Big claims need" accent="receipts." />
         <Proof />
+        <Bridge text="And this is what it all runs on." />
         <ArsenalMarquee />
-        <ChapterBreak words={["The build pile", "Ship it anyway", "Controlled chaos"]} tone="teal" tilt={1.2} base={3} />
+        <Bridge text="Plus everything else I couldn't stop building." />
         <ProjectGrid />
+        <Bridge text="So what's happening" accent="right now?" />
         <NowPanel />
+        <Bridge text="Okay. Time to play." />
         <SecretLab />
-        <ChapterBreak words={["Let's build something loud", "Cypher approves", "Say hi"]} tone="amber" />
+        <Bridge text="Found something fun?" accent="Let's talk." />
         <Contact />
       </main>
     </>

@@ -26,7 +26,7 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="relative pt-28">
+    <section id="contact" className="relative pt-14 md:pt-20">
       <div className="mx-auto w-[min(1150px,92vw)]">
         <SectionHead
           kicker="09 · transmissions open"

@@ -40,7 +40,7 @@ export default function AsiriveSpotlight() {
   const nameX = useTransform(scrollYProgress, [0, 1], ["12%", "-12%"]);
 
   return (
-    <section id="asirive" className="relative py-28">
+    <section id="asirive" className="relative py-14 md:py-20">
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-transparent via-amber/15 to-transparent" aria-hidden />
 
       <div className="mx-auto w-[min(1150px,92vw)]">

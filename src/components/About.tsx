@@ -19,7 +19,7 @@ export default function About() {
   const rB = useTransform(scrollYProgress, [0, 1], [10, 2]);
 
   return (
-    <section id="about" className="mx-auto w-[min(1150px,92vw)] py-28" ref={ref}>
+    <section id="about" className="mx-auto w-[min(1150px,92vw)] py-14 md:py-20" ref={ref}>
       <SectionHead
         kicker="01 · about the human (and the fox)"
         parts={[
@@ -46,7 +46,7 @@ export default function About() {
 
         <div>
           {profile.bio.map((p, i) => (
-            <SplitText key={i} as="p" parts={[{ t: p }]} className="mt-4 text-lg leading-relaxed text-ink" offset={["start 92%", "start 62%"]} />
+            <SplitText key={i} as="p" parts={[{ t: p }]} className="prose-body mt-4 text-lg leading-[1.65] text-ink" offset={["start 92%", "start 62%"]} />
           ))}
 
           <Reveal delay={0.1} variant="tilt">

@@ -13,7 +13,7 @@ const tone: Record<string, string> = {
 
 export default function NowPanel() {
   return (
-    <section id="now" className="mx-auto w-[min(1150px,92vw)] py-28">
+    <section id="now" className="mx-auto w-[min(1150px,92vw)] py-14 md:py-20">
       <SectionHead
         kicker="07 · right now"
         parts={[{ t: profile.status }, { t: "here's the proof.", c: "shimmer-teal" }]}
