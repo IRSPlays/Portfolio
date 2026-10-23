@@ -54,10 +54,10 @@ export default function ArsenalMarquee() {
       </div>
 
       <motion.div className="mt-14 space-y-4" style={{ skewY: skew }}>
-        <VelocityMarquee base={-5}>
+        <VelocityMarquee speed={-60}>
           <Pills items={arsenalMarquee} />
         </VelocityMarquee>
-        <VelocityMarquee base={5}>
+        <VelocityMarquee speed={60}>
           <Pills items={[...arsenalMarquee].reverse()} />
         </VelocityMarquee>
       </motion.div>

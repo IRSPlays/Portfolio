@@ -43,14 +43,14 @@ export default function Craft() {
       </div>
 
       <div className="mt-24 space-y-2" aria-hidden>
-        <VelocityMarquee base={-6}>
+        <VelocityMarquee speed={-45}>
           {arsenalMarquee.map((t) => (
             <span key={t} className="serif outline-text px-6 text-[clamp(3rem,8vw,8rem)] leading-none">
               {t}
             </span>
           ))}
         </VelocityMarquee>
-        <VelocityMarquee base={6}>
+        <VelocityMarquee speed={45}>
           {[...arsenalMarquee].reverse().map((t) => (
             <span key={t} className="serif px-6 text-[clamp(3rem,8vw,8rem)] leading-none">
               {t}

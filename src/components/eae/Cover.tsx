@@ -126,7 +126,7 @@ export default function Cover() {
       </motion.div>
 
       <div className="relative border-y border-ink bg-ink py-3 text-bg">
-        <VelocityMarquee base={-3}>
+        <VelocityMarquee speed={-40}>
           {["Assistive technology", "Edge AI", "Embedded systems", "Field-tested", "Built in Singapore"].map((t) => (
             <span key={t} className="micro px-8 text-[0.7rem]">
               {t} <span className="px-5 text-coral">/</span>
