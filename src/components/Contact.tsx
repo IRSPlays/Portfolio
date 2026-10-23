@@ -2,29 +2,13 @@
 
 import Image from "next/image";
 import Reveal from "@/components/Reveal";
+import SiteFooter from "@/components/SiteFooter";
 import Magnetic from "@/components/motion/Magnetic";
 import SectionHead from "@/components/motion/SectionHead";
 import PhotoFrame from "@/components/PhotoFrame";
-import CypherMascot from "@/components/CypherMascot";
 import { profile, resume, socials } from "@/data/content";
-import { boing } from "@/lib/sound";
-
-const footerLinks = [
-  { label: "top", href: "#top" },
-  { label: "about", href: "#about" },
-  { label: "road", href: "#road" },
-  { label: "asirive", href: "#asirive" },
-  { label: "projects", href: "#projects" },
-  { label: "lab", href: "#lab" },
-];
 
 export default function Contact() {
-  const scrollToTop = () => {
-    boing();
-    if (window.__lenis) window.__lenis.scrollTo(0, { duration: 1.8 });
-    else window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
   return (
     <section id="contact" className="relative pt-14 md:pt-20">
       <div className="mx-auto w-[min(1150px,92vw)]">
@@ -68,54 +52,7 @@ export default function Contact() {
         </Reveal>
       </div>
 
-      {/* Upgraded Footer Section */}
-      <footer className="relative mt-24 border-t-[3px] border-line bg-card/40 py-12">
-        <div className="mx-auto flex w-[min(1150px,92vw)] flex-col gap-8 md:flex-row md:items-center md:justify-between">
-          {/* Left: Brand, Mascot & Philosophy */}
-          <div className="flex items-center gap-5">
-            <div className="shrink-0">
-              <CypherMascot emotion="thankful" size={88} interactive={true} />
-            </div>
-            <div>
-              <div className="flex items-center gap-3">
-                <p className="font-display text-2xl sm:text-3xl font-extrabold text-ink">
-                  “{profile.motto}”
-                </p>
-                <span className="micro hidden sm:inline-block rounded-full bg-mint/20 px-2.5 py-0.5 text-[0.65rem] font-bold text-teal border border-teal/30">
-                  {profile.status}
-                </span>
-              </div>
-              <p className="micro mt-1 text-inksoft text-xs">
-                built by Haziq (IRSPlays) & Cypher · {new Date().getFullYear()} · Singapore · no foxes were harmed
-              </p>
-            </div>
-          </div>
-
-          {/* Right: Quick Links & Teleport Button */}
-          <div className="flex flex-wrap items-center gap-4 md:justify-end">
-            <ul className="flex items-center gap-2">
-              {footerLinks.map((l) => (
-                <li key={l.href}>
-                  <a
-                    href={l.href}
-                    className="font-mono text-xs font-bold uppercase tracking-wider text-inksoft hover:text-ink px-2.5 py-1 rounded-full hover:bg-bg2/60 transition-colors"
-                  >
-                    {l.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-
-            <button
-              onClick={scrollToTop}
-              className="btn-squish btn-solid px-4 py-2 font-mono text-xs font-bold shrink-0"
-              aria-label="Scroll back to top"
-            >
-              teleport top ↑
-            </button>
-          </div>
-        </div>
-      </footer>
+      <SiteFooter />
     </section>
   );
 }

@@ -48,7 +48,7 @@ export default function AsiriveSpotlight() {
           <p className="micro text-inksoft">03 · the flagship company</p>
           <motion.h2
             style={{ x: nameX }}
-            className="mt-2 whitespace-nowrap font-display text-[clamp(4rem,17vw,14rem)] font-extrabold leading-[0.85] shimmer-teal"
+            className="mt-2 whitespace-nowrap font-display text-[clamp(4.5rem,16vw,13rem)] font-extrabold leading-[0.85] shimmer-teal"
           >
             {asirive.name}
           </motion.h2>
