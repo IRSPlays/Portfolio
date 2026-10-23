@@ -1,19 +1,26 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import FoxMascot, { type FoxMood } from "@/components/FoxMascot";
+import CypherMascot from "@/components/CypherMascot";
 import Reveal from "@/components/Reveal";
 import { Sticker, PawIcon, ChipIcon, SparkleIcon, BoltIcon } from "@/components/Sticker";
-import { fursuitRnd, foxLines, fortunes, graveyard } from "@/data/content";
-import { soundEnabled, toggleSound } from "@/lib/sound";
+import {
+  fursuitRnd,
+  foxLines,
+  fortunes,
+  graveyard,
+  cypherEmotions,
+  cypherEmotionsMap,
+  type CypherEmotionId,
+} from "@/data/content";
+import { soundEnabled, toggleSound, blip, boing } from "@/lib/sound";
 
-const moods: FoxMood[] = ["happy", "suspicious", "sleepy", "idle"];
 const KONAMI = ["ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown", "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight", "b", "a"];
 
 export default function SecretLab() {
   const zone = useRef<HTMLDivElement>(null);
-  const [mood, setMood] = useState<FoxMood>("idle");
-  const [line, setLine] = useState("poke me. i dare you.");
+  const [emotion, setEmotion] = useState<CypherEmotionId>("smirk");
+  const [speech, setSpeech] = useState<string>(cypherEmotionsMap.smirk.quote);
   const [party, setParty] = useState(false);
   const [pawOn, setPawOn] = useState(true);
   const [fxOn, setFxOn] = useState(true);
@@ -24,10 +31,36 @@ export default function SecretLab() {
     setFortune(fortunes[Math.floor(Math.random() * fortunes.length)]);
   }, []);
 
+  const selectEmotion = (id: CypherEmotionId) => {
+    setEmotion(id);
+    const data = cypherEmotionsMap[id];
+    setSpeech(data.quote);
+    blip(740);
+  };
+
   const poke = () => {
-    const next = moods[(moods.indexOf(mood) + 1) % moods.length];
-    setMood(next);
-    setLine(foxLines.poke[Math.floor(Math.random() * foxLines.poke.length)]);
+    const list: CypherEmotionId[] = [
+      "failing-with-honor",
+      "excited",
+      "uneasy",
+      "cooked",
+      "locked-in",
+      "angry",
+      "thankful",
+      "smirk",
+    ];
+    const nextIdx = (list.indexOf(emotion) + 1) % list.length;
+    const nextEmotion = list[nextIdx];
+    setEmotion(nextEmotion);
+    const randomPokeLine = foxLines.poke[Math.floor(Math.random() * foxLines.poke.length)];
+    setSpeech(randomPokeLine);
+    boing();
+  };
+
+  const randomVibe = () => {
+    const pool = cypherEmotions.filter((e) => e.id !== emotion);
+    const chosen = pool[Math.floor(Math.random() * pool.length)];
+    selectEmotion(chosen.id);
   };
 
   const togglePaw = () => {
@@ -40,12 +73,14 @@ export default function SecretLab() {
   const startParty = () => {
     document.documentElement.classList.add("party");
     setParty(true);
-    setLine(foxLines.konami);
-    setMood("happy");
+    setEmotion("excited");
+    setSpeech(foxLines.konami);
+    boing();
     window.setTimeout(() => {
       document.documentElement.classList.remove("party");
       setParty(false);
-      setMood("idle");
+      setEmotion("smirk");
+      setSpeech(cypherEmotionsMap.smirk.quote);
     }, 6000);
   };
 
@@ -61,8 +96,9 @@ export default function SecretLab() {
     };
     window.addEventListener("keydown", onKeydown);
     return () => window.removeEventListener("keydown", onKeydown);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const currentEmotionData = cypherEmotionsMap[emotion] ?? cypherEmotionsMap.smirk;
 
   return (
     <section id="lab" className="mx-auto w-[min(1150px,92vw)] py-28">
@@ -132,18 +168,75 @@ export default function SecretLab() {
           </Reveal>
         </div>
 
+        {/* Right column: Interactive Cypher Emotion Lab */}
         <div className="space-y-7">
           <Reveal delay={0.06}>
-            <div className="sticker-card flex flex-col items-center gap-4 p-6">
-              <div className="relative">
-                <div className={`float-soft ${party ? "party-dance" : ""}`}>
-                  <FoxMascot mood={mood} size={210} />
+            <div className="sticker-card flex flex-col items-center gap-6 p-6 md:p-8">
+              <div className="w-full flex items-center justify-between border-b border-line/15 pb-3">
+                <div>
+                  <span className="micro text-teal font-bold">CYPHER EMOTION LAB</span>
+                  <h3 className="font-display text-xl font-extrabold text-ink mt-0.5">
+                    Real Character Art Engine
+                  </h3>
                 </div>
-                <div className="absolute -top-2 right-[-140px] w-56 rounded-2xl border-[3px] border-line bg-card px-4 py-3 shadow-[4px_5px_0_var(--shadowc)]">
-                  <p className="text-sm font-bold">{line}</p>
+                <span className="micro px-3 py-1 rounded-full border-2 border-line bg-card font-mono text-xs font-bold text-amber">
+                  14 MOODS
+                </span>
+              </div>
+
+              {/* Character Presentation & Speech */}
+              <div className="relative flex flex-col items-center justify-center w-full pt-16">
+                <div className={`float-soft ${party ? "party-dance" : ""}`}>
+                  <CypherMascot
+                    emotion={emotion}
+                    size={270}
+                    interactive
+                    showSpeech
+                    speechText={speech}
+                    onPoke={poke}
+                    lighting="lab"
+                  />
                 </div>
               </div>
-              <div className="mt-2 flex flex-wrap justify-center gap-3">
+
+              {/* Emotion Selector Matrix */}
+              <div className="w-full mt-2">
+                <div className="flex items-center justify-between mb-2">
+                  <p className="micro text-inksoft">SELECT CYPHER&apos;S MOOD (SMOOTH MORPH):</p>
+                  <button
+                    onClick={randomVibe}
+                    className="font-mono text-[0.7rem] font-bold text-teal hover:underline uppercase"
+                  >
+                    🎲 random vibe
+                  </button>
+                </div>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                  {cypherEmotions.map((e) => {
+                    const active = e.id === emotion;
+                    return (
+                      <button
+                        key={e.id}
+                        onClick={() => selectEmotion(e.id)}
+                        className={`flex items-center justify-between px-3 py-2 rounded-xl border-2 transition-all text-left ${
+                          active
+                            ? "border-line bg-teal/20 text-ink shadow-[2px_2px_0_var(--shadowc)] scale-[1.02]"
+                            : "border-line/40 bg-card hover:border-line hover:bg-bg2/60 text-inksoft hover:text-ink"
+                        }`}
+                      >
+                        <span className="font-sans text-xs font-bold truncate">
+                          {e.name}
+                        </span>
+                        <span className="font-mono text-[0.62rem] opacity-70 ml-1 shrink-0 uppercase">
+                          {e.tag}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Action Controls */}
+              <div className="flex flex-wrap justify-center gap-3 pt-2 w-full border-t border-line/10">
                 <button className="btn-squish btn-coral" data-boing onClick={poke}>
                   poke the fox
                 </button>
@@ -151,17 +244,24 @@ export default function SecretLab() {
                   paw cursor: {pawOn ? "on" : "off"}
                 </button>
                 <button className="btn-squish" onClick={toggleFx}>
-                  boing: {fxOn ? "on" : "off"}
+                  sound: {fxOn ? "on" : "off"}
                 </button>
                 <button className="btn-squish btn-solid" onClick={startParty}>
                   ↑↑↓↓←→←→BA
                 </button>
               </div>
-              <p className="micro text-inksoft">(konami code also works on your keyboard. we don&apos;t judge.)</p>
+
+              <p className="micro text-inksoft text-center">
+                (konami code also works directly on your keyboard. we don&apos;t judge.)
+              </p>
+
               {fortune ? (
-                <p className="mt-2 rounded-full border-2 border-dashed border-inksoft/40 px-4 py-2 text-center text-sm text-inksoft">
-                  🍪 fox fortune: {fortune}
-                </p>
+                <div className="w-full rounded-2xl border-2 border-dashed border-inksoft/40 bg-bg/40 px-4 py-3 text-center">
+                  <span className="micro text-amber font-bold block mb-1">FOX FORTUNE COOKIE</span>
+                  <p className="font-sans text-sm text-ink font-medium italic">
+                    “{fortune}”
+                  </p>
+                </div>
               ) : null}
             </div>
           </Reveal>

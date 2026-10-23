@@ -5,37 +5,45 @@ import { Float } from "@react-three/drei";
 import * as THREE from "three";
 import { Suspense, useMemo, useRef } from "react";
 
-function StickerCard({
+function ArtworkCard({
   url,
   position,
   rotation,
   scale,
+  aspect = 1,
+  speed = 1.2,
+  rotationIntensity = 0.35,
+  floatIntensity = 1.0,
 }: {
   url: string;
   position: [number, number, number];
   rotation: [number, number, number];
   scale: number | [number, number, number];
+  aspect?: number;
+  speed?: number;
+  rotationIntensity?: number;
+  floatIntensity?: number;
 }) {
   const texture = useLoader(THREE.TextureLoader, url);
   texture.colorSpace = THREE.SRGBColorSpace;
   return (
-    <Float speed={1.3} rotationIntensity={0.35} floatIntensity={1.1}>
+    <Float speed={speed} rotationIntensity={rotationIntensity} floatIntensity={floatIntensity}>
       <mesh position={position} rotation={rotation} scale={scale}>
-        <planeGeometry args={[1, 1]} />
+        <planeGeometry args={[aspect, 1]} />
         <meshBasicMaterial map={texture} side={THREE.DoubleSide} transparent />
       </mesh>
     </Float>
   );
 }
 
-function Dust({ count = 130 }: { count?: number }) {
+function Dust({ count = 140 }: { count?: number }) {
   const ref = useRef<THREE.Points>(null);
   const positions = useMemo(() => {
     const arr = new Float32Array(count * 3);
     for (let i = 0; i < count; i++) {
-      arr[i * 3] = (Math.random() - 0.5) * 15;
-      arr[i * 3 + 1] = (Math.random() - 0.5) * 9;
-      arr[i * 3 + 2] = (Math.random() - 0.5) * 6;
+      arr[i * 3] = (Math.random() - 0.5) * 16;
+      arr[i * 3 + 1] = (Math.random() - 0.5) * 10;
+      arr[i * 3 + 2] = (Math.random() - 0.5) * 7;
     }
     return arr;
   }, [count]);
@@ -74,10 +82,45 @@ export default function HeroScene() {
     >
       <Rig>
         <Suspense fallback={null}>
-          <StickerCard url="/cypher-sticker.jpg" position={[-3.1, 0.6, -1.2]} rotation={[0, 0.3, -0.12]} scale={1.6} />
-          <StickerCard url="/cypher-scene.jpg" position={[3.1, -0.5, -1.6]} rotation={[0, -0.3, 0.08]} scale={[2.3, 1.72, 1]} />
-          <StickerCard url="/cypher-sticker.jpg" position={[0.4, 1.5, -2.5]} rotation={[0.1, 0, 0.18]} scale={0.95} />
-          <StickerCard url="/cypher-scene.jpg" position={[-1.5, -1.5, -2.1]} rotation={[0, 0.15, -0.14]} scale={[1.1, 0.82, 1]} />
+          {/* Cypher Wallpaper (16:9 widescreen artwork) */}
+          <ArtworkCard
+            url="/cypher-wallpaper.jpg"
+            aspect={1.79}
+            position={[3.8, -0.6, -2.4]}
+            rotation={[0.04, -0.32, 0.06]}
+            scale={1.8}
+            speed={1.1}
+          />
+
+          {/* Cypher Scene Artwork on left */}
+          <ArtworkCard
+            url="/cypher-scene.jpg"
+            aspect={1.33}
+            position={[-3.3, 0.6, -1.6]}
+            rotation={[0, 0.28, -0.1]}
+            scale={1.65}
+            speed={1.2}
+          />
+
+          {/* Background Wallpaper Depth Card */}
+          <ArtworkCard
+            url="/cypher-wallpaper.jpg"
+            aspect={1.79}
+            position={[-1.6, -1.8, -2.4]}
+            rotation={[0.08, 0.18, -0.12]}
+            scale={1.35}
+            speed={0.9}
+          />
+
+          {/* Full Art Sticker Card (Depth) */}
+          <ArtworkCard
+            url="/cypher-sticker.jpg"
+            aspect={1.0}
+            position={[0.5, 1.7, -2.7]}
+            rotation={[0.06, 0, 0.14]}
+            scale={1.05}
+            speed={1.0}
+          />
         </Suspense>
         <Dust />
       </Rig>

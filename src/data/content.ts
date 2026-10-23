@@ -302,28 +302,172 @@ export const fursuitRnd = {
   ],
 };
 
-export const stackVerdicts: Record<string, { score: string; line: string }> = {
-  electron: { score: "3/10", line: "RIP system memory. We run bare-metal edge hardware here." },
-  "c++": { score: "9.5/10", line: "Direct memory control. Zero runtime bloat. Respect." },
-  c: { score: "9.5/10", line: "Direct memory control. Zero runtime bloat. Respect." },
-  cpp: { score: "9.5/10", line: "Direct memory control. Zero runtime bloat. Respect." },
-  assembly: { score: "9.5/10", line: "You talk to the silicon directly. Cypher bows." },
-  python: { score: "7/10", line: "Great for model prototyping, but keep it away from real-time blocking loops." },
-  rust: { score: "9/10", line: "Memory safety without the garbage collector overhead. Acceptable." },
-  docker: { score: "5/10", line: "Boxes inside boxes. Fine for the cloud, useless during a brownout." },
-  wordpress: { score: "1/10", line: "*stares in embedded C* Try again." },
-  react: { score: "8/10", line: "Websites pretending to be apps. I allow it — this portfolio runs on it." },
-  "next.js": { score: "8.5/10", line: "React with a spine. Deployed on Vercel like a civilized being." },
-  nextjs: { score: "8.5/10", line: "React with a spine. Deployed on Vercel like a civilized being." },
-  typescript: { score: "8/10", line: "Types are just armor for your future self. Wear them." },
-  "three.js": { score: "9/10", line: "Pixels in the third dimension. Cypher approves of this geometry." },
-  threejs: { score: "9/10", line: "Pixels in the third dimension. Cypher approves of this geometry." },
-  pytorch: { score: "9/10", line: "Where Aether's ancestors were born. Tender memories." },
-  java: { score: "4/10", line: "Write once, run out of heap everywhere." },
-  go: { score: "7/10", line: "Fast, boring, reliable. Like a good soldering iron." },
-  html: { score: "6/10", line: "Not a language. Still essential. Like oxygen." },
-  css: { score: "7.5/10", line: "The true boss battle. Centering a div is a personality test." },
-  matlab: { score: "3/10", line: "Expensive sadness with a matrix fetish." },
+export type CypherEmotionId =
+  | "base"
+  | "smirk"
+  | "locked-in"
+  | "happy"
+  | "excited"
+  | "failing-with-honor"
+  | "wise"
+  | "thankful"
+  | "uneasy"
+  | "puzzled"
+  | "angry"
+  | "panic"
+  | "cooked"
+  | "exhausted";
+
+export type CypherEmotion = {
+  id: CypherEmotionId;
+  name: string;
+  tag: string;
+  src: string;
+  quote: string;
+  color: string;
+};
+
+export const cypherEmotions: CypherEmotion[] = [
+  {
+    id: "base",
+    name: "Base",
+    tag: "observant",
+    src: "/cypher/base.png",
+    quote: "Observing the ambient bus. Hardware online, zero faults.",
+    color: "var(--teal)",
+  },
+  {
+    id: "smirk",
+    name: "Confident Smirk",
+    tag: "systems",
+    src: "/cypher/smirk.png",
+    quote: "Bare-metal edge hardware with zero runtime bloat. As it should be.",
+    color: "var(--mint)",
+  },
+  {
+    id: "locked-in",
+    name: "Locked In",
+    tag: "deep focus",
+    src: "/cypher/locked-in.png",
+    quote: "Tuning PolyMamba2 spectral radius clamps. Do not disturb the flow.",
+    color: "var(--navy)",
+  },
+  {
+    id: "happy",
+    name: "Happy",
+    tag: "wholesome",
+    src: "/cypher/happy.png",
+    quote: "116 tests passing, clean build, zero lints. Rare good day.",
+    color: "var(--mint)",
+  },
+  {
+    id: "excited",
+    name: "Excited",
+    tag: "hyped",
+    src: "/cypher/excited.png",
+    quote: "Flashed the new firmware and the bench supply didn't smoke! Let's GO!",
+    color: "var(--amber)",
+  },
+  {
+    id: "failing-with-honor",
+    name: "Failing with Honor",
+    tag: "the motto",
+    src: "/cypher/failing-with-honor.png",
+    quote: "Sheared along layer lines under 1.2 Nm torque. Necessary renovation for character.",
+    color: "var(--coral)",
+  },
+  {
+    id: "wise",
+    name: "Wise Man",
+    tag: "sage",
+    src: "/cypher/wise.png",
+    quote: "He who controls his own memory allocations fears no cloud outage.",
+    color: "var(--navy)",
+  },
+  {
+    id: "thankful",
+    name: "Thankful",
+    tag: "gratitude",
+    src: "/cypher/thankful.png",
+    quote: "To the SAVH guides and field testers: Cortex is built for you.",
+    color: "var(--teal)",
+  },
+  {
+    id: "uneasy",
+    name: "Uneasy",
+    tag: "suspicious",
+    src: "/cypher/uneasy.png",
+    quote: "Did someone just merge directly into main without a hardware bench verification...?",
+    color: "var(--amber)",
+  },
+  {
+    id: "puzzled",
+    name: "Puzzled",
+    tag: "confused",
+    src: "/cypher/puzzled.png",
+    quote: "Why is there an Electron runtime in an assistive wearable BOM?! Make it make sense.",
+    color: "var(--navy)",
+  },
+  {
+    id: "angry",
+    name: "Angry",
+    tag: "rage",
+    src: "/cypher/angry.png",
+    quote: "Who added 400MB of node_modules to a real-time sensor loop?! Explain yourself.",
+    color: "var(--coral)",
+  },
+  {
+    id: "panic",
+    name: "Panic",
+    tag: "thermals",
+    src: "/cypher/panic.png",
+    quote: "SoC HIT 82°C! PASSIVE HEAT SPREADER ENGAGED! VENT THE ENCLOSURE!",
+    color: "var(--coral)",
+  },
+  {
+    id: "cooked",
+    name: "Cooked",
+    tag: "4:30 AM R&D",
+    src: "/cypher/cooked.png",
+    quote: "It's 4:30 AM. My brain is running on 1-bit quantization and pure spite.",
+    color: "var(--amber)",
+  },
+  {
+    id: "exhausted",
+    name: "Exhausted",
+    tag: "sleep mode",
+    src: "/cypher/exhausted.png",
+    quote: "Pain first, rest later. But right now... rest is winning.",
+    color: "var(--inksoft)",
+  },
+];
+
+export const cypherEmotionsMap: Record<CypherEmotionId, CypherEmotion> = Object.fromEntries(
+  cypherEmotions.map((e) => [e.id, e])
+) as Record<CypherEmotionId, CypherEmotion>;
+
+export const stackVerdicts: Record<string, { score: string; line: string; emotion: CypherEmotionId }> = {
+  electron: { score: "3/10", line: "RIP system memory. We run bare-metal edge hardware here.", emotion: "angry" },
+  "c++": { score: "9.5/10", line: "Direct memory control. Zero runtime bloat. Respect.", emotion: "locked-in" },
+  c: { score: "9.5/10", line: "Direct memory control. Zero runtime bloat. Respect.", emotion: "locked-in" },
+  cpp: { score: "9.5/10", line: "Direct memory control. Zero runtime bloat. Respect.", emotion: "locked-in" },
+  assembly: { score: "9.5/10", line: "You talk to the silicon directly. Cypher bows.", emotion: "wise" },
+  python: { score: "7/10", line: "Great for model prototyping, but keep it away from real-time blocking loops.", emotion: "smirk" },
+  rust: { score: "9/10", line: "Memory safety without the garbage collector overhead. Acceptable.", emotion: "smirk" },
+  docker: { score: "5/10", line: "Boxes inside boxes. Fine for the cloud, useless during a brownout.", emotion: "uneasy" },
+  wordpress: { score: "1/10", line: "*stares in embedded C* Try again.", emotion: "failing-with-honor" },
+  react: { score: "8/10", line: "Websites pretending to be apps. I allow it — this portfolio runs on it.", emotion: "happy" },
+  "next.js": { score: "8.5/10", line: "React with a spine. Deployed on Vercel like a civilized being.", emotion: "excited" },
+  nextjs: { score: "8.5/10", line: "React with a spine. Deployed on Vercel like a civilized being.", emotion: "excited" },
+  typescript: { score: "8/10", line: "Types are just armor for your future self. Wear them.", emotion: "locked-in" },
+  "three.js": { score: "9/10", line: "Pixels in the third dimension. Cypher approves of this geometry.", emotion: "excited" },
+  threejs: { score: "9/10", line: "Pixels in the third dimension. Cypher approves of this geometry.", emotion: "excited" },
+  pytorch: { score: "9/10", line: "Where Aether's ancestors were born. Tender memories.", emotion: "thankful" },
+  java: { score: "4/10", line: "Write once, run out of heap everywhere.", emotion: "puzzled" },
+  go: { score: "7/10", line: "Fast, boring, reliable. Like a good soldering iron.", emotion: "base" },
+  html: { score: "6/10", line: "Not a language. Still essential. Like oxygen.", emotion: "base" },
+  css: { score: "7.5/10", line: "The true boss battle. Centering a div is a personality test.", emotion: "panic" },
+  matlab: { score: "3/10", line: "Expensive sadness with a matrix fetish.", emotion: "cooked" },
 };
 
 export const stackSuffixes = [

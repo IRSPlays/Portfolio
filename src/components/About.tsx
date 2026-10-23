@@ -27,7 +27,7 @@ export default function About() {
         <div className="relative flex flex-col items-center gap-8 md:block md:h-[520px]">
           <motion.div style={{ y: yA }} className="w-full max-w-[340px] rotate-[-4deg] md:absolute md:left-0 md:top-0 md:w-[78%] md:max-w-none">
             <div className="sticker-card p-3">
-              <PhotoFrame slot="cypher-portrait" src="/cypher-sticker.jpg" alt="Cypher, Haziq's fursona" />
+              <PhotoFrame slot="cypher-portrait" src="/cypher/pfp.jpg" aspect="1 / 1" alt="Cypher, Haziq's fursona" />
               <p className="micro mt-2 text-center text-inksoft">CYPHER · resident fox · CTO of vibes</p>
             </div>
           </motion.div>

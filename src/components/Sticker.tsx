@@ -41,11 +41,50 @@ export function Sticker({
 export function PawIcon({ size = 64 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 64 64" aria-hidden>
-      <g stroke="#0B110D" strokeWidth="3.5" strokeLinejoin="round">
-        <circle cx="16" cy="22" r="7" fill="var(--coral)" />
-        <circle cx="30" cy="14" r="7" fill="var(--mint)" />
-        <circle cx="45" cy="18" r="7" fill="var(--teal)" />
-        <path d="M32 28c9 0 17 7 17 14s-7 10-17 10-17-3-17-10 8-14 17-14z" fill="var(--amber)" />
+      <g stroke="#0B110D" strokeWidth="3" strokeLinejoin="round" strokeLinecap="round">
+        {/* Black Claws */}
+        <path d="M15 17 L12 8 L18 14 Z" fill="#0B110D" />
+        <path d="M26 13 L25 4 L30 11 Z" fill="#0B110D" />
+        <path d="M38 12 L41 4 L42 11 Z" fill="#0B110D" />
+        <path d="M49 16 L55 9 L51 15 Z" fill="#0B110D" />
+
+        {/* Mint Fur Silhouette */}
+        <path
+          d="M16 25
+             C12 21, 10 15, 16 15
+             C20 15, 22 18, 23 21
+             C23 16, 23 10, 28 10
+             C33 10, 34 15, 34 20
+             C36 15, 37 9, 42 9
+             C47 9, 47 15, 45 20
+             C47 17, 50 14, 53 15
+             C57 16, 56 22, 52 26
+             C56 31, 57 37, 53 44
+             C49 50, 44 56, 32 56
+             C20 56, 15 50, 11 43
+             C7 35, 10 30, 16 25 Z"
+          fill="#5DE89A"
+        />
+
+        {/* Side fur tufts */}
+        <path d="M11 39 L6 41 L9 45" fill="#5DE89A" />
+        <path d="M53 39 L58 41 L55 45" fill="#5DE89A" />
+
+        {/* 4 Cerulean Blue Toe Beans */}
+        <ellipse cx="18" cy="20" rx="3.6" ry="4.8" transform="rotate(-18 18 20)" fill="#1C7EBC" />
+        <ellipse cx="28.5" cy="16" rx="3.6" ry="5.2" transform="rotate(-4 28.5 16)" fill="#1C7EBC" />
+        <ellipse cx="39.5" cy="16" rx="3.6" ry="5.2" transform="rotate(4 39.5 16)" fill="#1C7EBC" />
+        <ellipse cx="50" cy="21" rx="3.6" ry="4.8" transform="rotate(18 50 21)" fill="#1C7EBC" />
+
+        {/* Main Blue Palm Pad Bean */}
+        <path
+          d="M23 35
+             C23 29, 29 28, 34 30
+             C39 28, 45 29, 45 35
+             C45 43, 39 48, 34 48
+             C29 48, 23 43, 23 35 Z"
+          fill="#1C7EBC"
+        />
       </g>
     </svg>
   );

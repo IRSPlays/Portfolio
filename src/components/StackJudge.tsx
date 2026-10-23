@@ -2,11 +2,35 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
-import { stackSuffixes, stackVerdicts } from "@/data/content";
+import {
+  stackSuffixes,
+  stackVerdicts,
+  type CypherEmotionId,
+} from "@/data/content";
 
-const pills = ["Electron", "C++", "Python", "Rust", "Docker", "WordPress", "React", "Next.js", "Three.js", "TypeScript", "Java", "Go", "CSS", "MATLAB"];
+const pills = [
+  "Electron",
+  "C++",
+  "Python",
+  "Rust",
+  "Docker",
+  "WordPress",
+  "React",
+  "Next.js",
+  "Three.js",
+  "TypeScript",
+  "Java",
+  "Go",
+  "CSS",
+  "MATLAB",
+];
 
-type Verdict = { score: string; line: string; query: string };
+export type Verdict = {
+  score: string;
+  line: string;
+  query: string;
+  emotion: CypherEmotionId;
+};
 
 function judge(raw: string): Verdict {
   const key = raw.trim().toLowerCase().replace(/\s+/g, " ");
@@ -17,15 +41,21 @@ function judge(raw: string): Verdict {
   const base = hit ?? {
     score: "??/10",
     line: "If it can't run on an embedded chip during a brownout, Cypher remains unimpressed.",
+    emotion: "puzzled" as CypherEmotionId,
   };
   return {
     ...base,
     line: `${base.line} ${stackSuffixes[Math.floor(Math.random() * stackSuffixes.length)]}`,
     query: raw.trim() || "mystery tech",
+    emotion: base.emotion ?? "puzzled",
   };
 }
 
-export default function StackJudge() {
+export default function StackJudge({
+  onJudge,
+}: {
+  onJudge?: (emotion: CypherEmotionId, verdict: Verdict) => void;
+}) {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
   const [verdict, setVerdict] = useState<Verdict | null>(null);
@@ -33,20 +63,24 @@ export default function StackJudge() {
   const submit = (raw: string) => {
     if (!raw.trim()) return;
     setValue(raw);
-    setVerdict(judge(raw));
+    const result = judge(raw);
+    setVerdict(result);
+    onJudge?.(result.emotion, result);
   };
 
   return (
     <div className="max-w-[420px]">
       <motion.button
-        className="sticker-card px-4 py-3 text-left"
+        className="sticker-card px-4 py-3 text-left w-full"
         data-boing
         onClick={() => setOpen((v) => !v)}
         whileHover={{ scale: 1.03, rotate: -1 }}
         whileTap={{ scale: 0.95, rotate: 1.5 }}
         aria-expanded={open}
       >
-        <span className="micro font-bold">THAT&apos;S CYPHER. HE JUDGES YOUR STACK. (tap)</span>
+        <span className="micro font-bold text-ink">
+          THAT&apos;S CYPHER. HE JUDGES YOUR STACK. (tap)
+        </span>
       </motion.button>
 
       <AnimatePresence>
@@ -73,16 +107,16 @@ export default function StackJudge() {
                 aria-label="Technology to judge"
                 className="min-w-0 flex-1 rounded-full border-[3px] border-line bg-bg px-4 py-2 font-mono text-sm outline-none focus:border-teal"
               />
-              <button type="submit" className="btn-squish btn-solid px-4 py-2">
+              <button type="submit" className="btn-squish btn-solid px-4 py-2 text-xs">
                 judge
               </button>
             </form>
-            <div className="mt-3 flex flex-wrap gap-2">
+            <div className="mt-3 flex flex-wrap gap-1.5">
               {pills.map((p) => (
                 <button
                   key={p}
                   onClick={() => submit(p)}
-                  className="micro rounded-full border-2 border-line px-3 py-1 transition-transform hover:scale-105"
+                  className="font-mono text-xs rounded-full border-2 border-line px-2.5 py-1 bg-card hover:bg-bg2 transition-transform hover:scale-105 active:scale-95"
                 >
                   {p}
                 </button>
@@ -102,7 +136,7 @@ export default function StackJudge() {
                     <p className="font-display text-lg font-extrabold">{verdict.query}</p>
                     <p className="font-display text-2xl font-extrabold text-coral">{verdict.score}</p>
                   </div>
-                  <p className="mt-1 text-sm text-inksoft">{verdict.line}</p>
+                  <p className="mt-1 text-sm text-inksoft leading-relaxed">{verdict.line}</p>
                 </motion.div>
               ) : null}
             </AnimatePresence>

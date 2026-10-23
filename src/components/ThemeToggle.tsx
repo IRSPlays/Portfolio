@@ -3,7 +3,7 @@
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 
-export default function ThemeToggle() {
+export default function ThemeToggle({ className }: { className?: string }) {
   const { resolvedTheme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [beam, setBeam] = useState(false);
@@ -15,7 +15,10 @@ export default function ThemeToggle() {
   return (
     <>
       <button
-        className="btn-squish px-3 py-1.5"
+        className={
+          className ??
+          "btn-squish px-3 py-1.5 flex items-center gap-1.5"
+        }
         aria-label={dark ? "Switch to daylight mode" : "Switch to sunset mode"}
         onClick={() => {
           setTheme(dark ? "light" : "dark");
@@ -23,7 +26,7 @@ export default function ThemeToggle() {
           window.setTimeout(() => setBeam(false), 950);
         }}
       >
-        <svg width="18" height="18" viewBox="0 0 64 64" aria-hidden>
+        <svg width="16" height="16" viewBox="0 0 64 64" aria-hidden className="shrink-0">
           {dark ? (
             <g stroke="#0B110D" strokeWidth="4" strokeLinecap="round">
               <circle cx="32" cy="32" r="12" fill="var(--amber)" />
@@ -39,7 +42,9 @@ export default function ThemeToggle() {
             />
           )}
         </svg>
-        <span className="micro">{dark ? "daylight" : "sunset"}</span>
+        <span className="font-mono text-xs font-bold uppercase tracking-wider">
+          {dark ? "daylight" : "sunset"}
+        </span>
       </button>
       {beam ? <div className="sunbeam" /> : null}
     </>

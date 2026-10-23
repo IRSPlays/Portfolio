@@ -14,25 +14,39 @@ const links = [
 
 export default function SiteNav() {
   return (
-    <header className="fixed inset-x-0 top-0 z-[80]">
-      <nav className="mx-auto mt-3 flex h-12 w-[min(1000px,96vw)] items-center justify-between gap-3 rounded-full border-[3px] border-line bg-card px-4 shadow-[4px_5px_0_var(--shadowc)]">
-        <a href="#top" className="micro shrink-0 font-bold text-ink">
-          HAZIQ <span className="text-teal">//</span> CYPHER
+    <header className="fixed inset-x-0 top-0 z-[80] pointer-events-none">
+      <nav className="pointer-events-auto mx-auto mt-3.5 flex h-14 w-[min(1120px,94vw)] items-center justify-between gap-4 rounded-full border-[3px] border-line bg-card/95 backdrop-blur-md px-5 sm:px-6 shadow-[5px_6px_0_var(--shadowc)]">
+        {/* Brand / Logo */}
+        <a
+          href="#top"
+          className="shrink-0 font-display text-sm sm:text-base font-extrabold tracking-tight text-ink hover:text-teal transition-colors"
+        >
+          HAZIQ <span className="font-mono text-teal text-xs font-bold">//</span> CYPHER
         </a>
-        <ul className="hidden items-center gap-3 lg:flex">
+
+        {/* Center Nav Links */}
+        <ul className="hidden items-center gap-1 xl:gap-2 lg:flex">
           {links.map((l) => (
             <li key={l.href}>
-              <a href={l.href} className="micro text-inksoft transition-colors hover:text-ink">
+              <a
+                href={l.href}
+                className="font-mono text-[0.73rem] font-bold uppercase tracking-wider text-inksoft hover:text-ink hover:bg-bg2/70 px-2.5 py-1 rounded-full transition-all"
+              >
                 {l.label}
               </a>
             </li>
           ))}
         </ul>
-        <div className="ml-auto flex shrink-0 items-center gap-2 lg:ml-0">
-          <a href={resume.cvHref} className="btn-squish px-3 py-1.5">
-            <span className="micro font-bold">{resume.label}</span>
+
+        {/* Right Actions */}
+        <div className="flex shrink-0 items-center gap-2.5">
+          <a
+            href={resume.cvHref}
+            className="flex items-center gap-1 rounded-full border-2 border-line bg-card hover:bg-bg2 active:scale-95 transition-all px-3 py-1 font-mono text-xs font-bold shadow-[2px_2px_0_var(--shadowc)] hover:shadow-[3px_3px_0_var(--shadowc)] text-ink"
+          >
+            <span>{resume.label}</span>
           </a>
-          <ThemeToggle />
+          <ThemeToggle className="flex items-center gap-1.5 rounded-full border-2 border-line bg-card hover:bg-bg2 active:scale-95 transition-all px-3 py-1 font-mono text-xs font-bold shadow-[2px_2px_0_var(--shadowc)] hover:shadow-[3px_3px_0_var(--shadowc)] text-ink" />
         </div>
       </nav>
     </header>

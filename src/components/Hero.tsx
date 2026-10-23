@@ -3,10 +3,10 @@
 import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import FoxMascot from "@/components/FoxMascot";
+import CypherMascot from "@/components/CypherMascot";
 import StackJudge from "@/components/StackJudge";
 import { Sticker, PawIcon, SparkleIcon, BoltIcon } from "@/components/Sticker";
-import { profile, roles } from "@/data/content";
+import { profile, roles, type CypherEmotionId } from "@/data/content";
 
 const HeroScene = dynamic(() => import("@/three/HeroScene"), { ssr: false, loading: () => null });
 
@@ -58,6 +58,9 @@ function Typewriter() {
 export default function Hero() {
   const zone = useRef<HTMLDivElement>(null);
   const [show3d, setShow3d] = useState(false);
+  const [heroEmotion, setHeroEmotion] = useState<CypherEmotionId>("smirk");
+  const [heroSpeech, setHeroSpeech] = useState<string | undefined>(undefined);
+  const [showSpeech, setShowSpeech] = useState(false);
 
   useEffect(() => {
     setShow3d(
@@ -140,22 +143,50 @@ export default function Hero() {
           </motion.div>
         </div>
 
-        <div className="relative flex justify-center">
+        <div className="relative flex flex-col items-center justify-center">
           <motion.div
-            className="float-soft"
+            className="float-soft relative z-10"
             initial={{ scale: 0.6, opacity: 0, rotate: -10 }}
             animate={{ scale: 1, opacity: 1, rotate: 0 }}
             transition={{ type: "spring", stiffness: 140, damping: 13, delay: 0.35 }}
           >
-            <FoxMascot size={330} />
+            <CypherMascot
+              emotion={heroEmotion}
+              size={360}
+              priority
+              showSpeech={showSpeech}
+              speechText={heroSpeech}
+              onPoke={() => {
+                const nexts: CypherEmotionId[] = [
+                  "smirk",
+                  "excited",
+                  "locked-in",
+                  "failing-with-honor",
+                  "happy",
+                  "cooked",
+                  "thankful",
+                ];
+                const nextIdx = (nexts.indexOf(heroEmotion) + 1) % nexts.length;
+                const next = nexts[nextIdx];
+                setHeroEmotion(next);
+                setHeroSpeech(undefined);
+                setShowSpeech(true);
+              }}
+            />
           </motion.div>
           <motion.div
-            className="absolute -bottom-8 left-2 md:left-0"
+            className="mt-2 w-full max-w-[420px]"
             initial={{ scale: 0, rotate: -12 }}
-            animate={{ scale: 1, rotate: -2 }}
-            transition={{ type: "spring", stiffness: 260, damping: 12, delay: 1 }}
+            animate={{ scale: 1, rotate: -1 }}
+            transition={{ type: "spring", stiffness: 260, damping: 12, delay: 0.8 }}
           >
-            <StackJudge />
+            <StackJudge
+              onJudge={(emotion, verdict) => {
+                setHeroEmotion(emotion);
+                setHeroSpeech(verdict.line);
+                setShowSpeech(true);
+              }}
+            />
           </motion.div>
         </div>
       </div>

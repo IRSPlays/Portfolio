@@ -25,7 +25,14 @@ export const metadata: Metadata = {
     title: "Haziq (IRSPlays) — Systems Architect & Founder @ Asirive",
     description:
       "Systems Architect, AI/IoT Engineer and Founder of Asirive. Building Cortex, ambient AI and silly fox-powered web things.",
-    images: ["/cypher-scene.jpg"],
+    images: ["/cypher-wallpaper.jpg"],
+  },
+  icons: {
+    icon: [
+      { url: "/icon.png", sizes: "256x256", type: "image/png" },
+      { url: "/favicon.ico" },
+    ],
+    apple: "/icon.png",
   },
 };
 
