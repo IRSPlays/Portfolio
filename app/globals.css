@@ -52,6 +52,9 @@
 }
 
 html {
+  overflow-x: clip;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
   scroll-behavior: auto;
   scrollbar-width: thin;
   scrollbar-color: var(--coral) var(--bg2);
@@ -121,7 +124,7 @@ body {
   background-attachment: fixed;
   color: var(--ink);
   font-family: var(--font-sans);
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 ::selection {
@@ -375,4 +378,67 @@ p, li, blockquote {
 @keyframes blink-dot {
   0%, 100% { opacity: 0.3; }
   50% { opacity: 1; }
+}
+
+/* ---------- mobile / touch polish ---------- */
+.btn-squish {
+  min-height: 2.75rem;
+}
+a, button, [role="tab"] {
+  touch-action: manipulation;
+}
+.sheet {
+  box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.35);
+}
+
+/* touch devices: no sticky hover states, tactile press feedback instead */
+@media (hover: none) {
+  .sticker-card:hover {
+    transform: none;
+    box-shadow: 7px 9px 0 var(--shadowc);
+  }
+  .btn-squish:hover {
+    transform: none;
+    box-shadow: 4px 5px 0 var(--shadowc);
+  }
+  .btn-squish:active {
+    transform: translate(2px, 3px) scale(0.97);
+    box-shadow: 1px 2px 0 var(--shadowc);
+  }
+  .marquee:hover .marquee-track {
+    animation-play-state: running;
+  }
+  button.sticker-card:active {
+    transform: translate(3px, 4px);
+    box-shadow: 3px 4px 0 var(--shadowc);
+  }
+}
+
+@media (max-width: 640px) {
+  body {
+    font-size: 1rem;
+  }
+  .sticker-card {
+    border-width: 2.5px;
+    border-radius: 20px;
+    box-shadow: 5px 6px 0 var(--shadowc);
+  }
+  .micro {
+    letter-spacing: 0.12em;
+    font-size: 0.68rem;
+  }
+  h2 {
+    font-size: clamp(2.1rem, 10.5vw, 2.9rem);
+  }
+  .marquee {
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
+  }
+}
+
+/* fixed full-height layers should track the dynamic mobile toolbar */
+@supports (height: 100dvh) {
+  .min-h-hero {
+    min-height: 92dvh;
+  }
 }
