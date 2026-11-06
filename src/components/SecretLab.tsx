@@ -158,7 +158,7 @@ export default function SecretLab() {
             <div className="flex flex-col gap-5 p-6 md:p-8">
               <div className="flex items-center justify-between">
                 <p className="micro text-inksoft">pick a mood — smooth morph</p>
-                <button onClick={randomVibe} className="font-mono text-[0.7rem] font-bold uppercase text-teal hover:underline">
+                <button onClick={randomVibe} className="min-h-11 px-2 font-mono text-[0.72rem] font-bold uppercase text-teal hover:underline">
                   🎲 random vibe
                 </button>
               </div>
@@ -169,13 +169,13 @@ export default function SecretLab() {
                     <button
                       key={e.id}
                       onClick={() => selectEmotion(e.id)}
-                      className={`flex items-center justify-between rounded-xl border-2 px-3 py-2 text-left transition-all ${
+                      className={`flex min-h-11 items-center justify-between rounded-xl border-2 px-3 py-2 text-left transition-all active:scale-95 ${
                         active
                           ? "scale-[1.03] border-line bg-teal/25 text-ink shadow-[2px_2px_0_var(--shadowc)]"
                           : "border-line/40 bg-card text-inksoft hover:border-line hover:text-ink"
                       }`}
                     >
-                      <span className="truncate font-sans text-xs font-bold">{e.name}</span>
+                      <span className="truncate font-sans text-[0.8rem] font-bold">{e.name}</span>
                       <span className="ml-1 shrink-0 font-mono text-[0.58rem] uppercase opacity-70">{e.tag}</span>
                     </button>
                   );
@@ -186,7 +186,7 @@ export default function SecretLab() {
                 <button className="btn-squish btn-coral" data-boing onClick={poke}>
                   poke the fox
                 </button>
-                <button className="btn-squish" onClick={togglePaw}>
+                <button className="btn-squish hidden [@media(hover:hover)_and_(pointer:fine)]:inline-flex" onClick={togglePaw}>
                   paw cursor: {pawOn ? "on" : "off"}
                 </button>
                 <button className="btn-squish" onClick={toggleFx}>

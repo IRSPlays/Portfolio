@@ -17,7 +17,7 @@ const links = [
 ];
 
 const btn =
-  "rounded-full border-2 border-line bg-card px-3.5 py-1.5 font-mono text-[0.72rem] font-bold uppercase tracking-wider text-ink transition-transform hover:-translate-y-0.5 active:scale-95";
+  "min-h-11 items-center justify-center rounded-full border-2 border-line bg-card px-4 py-1.5 font-mono text-[0.72rem] font-bold uppercase tracking-wider text-ink transition-transform hover:-translate-y-0.5 active:scale-95";
 
 export default function SiteNav() {
   const [active, setActive] = useState("");
@@ -46,8 +46,14 @@ export default function SiteNav() {
 
   useEffect(() => {
     document.documentElement.style.overflow = menu ? "hidden" : "";
+    if (menu) window.__lenis?.stop();
+    else window.__lenis?.start();
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setMenu(false);
+    if (menu) window.addEventListener("keydown", onKey);
     return () => {
       document.documentElement.style.overflow = "";
+      window.__lenis?.start();
+      window.removeEventListener("keydown", onKey);
     };
   }, [menu]);
 
@@ -63,7 +69,7 @@ export default function SiteNav() {
             solid ? "border-b-[3px] border-line bg-bg/85 backdrop-blur-md" : "border-b-[3px] border-transparent"
           }`}
         >
-          <nav className="mx-auto flex h-[68px] w-[min(1280px,94vw)] items-center justify-between gap-6">
+          <nav className="mx-auto flex h-[68px] w-[min(1280px,94vw)] pt-[env(safe-area-inset-top)] items-center justify-between gap-6">
             <a href="#top" className="group flex items-center gap-3" aria-label="Back to top">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
@@ -101,16 +107,21 @@ export default function SiteNav() {
             </ul>
 
             <div className="flex items-center gap-2.5">
-              <a href={resume.cvHref} className={`${btn} hidden sm:inline-block`}>
+              <a href={resume.cvHref} className={`${btn} hidden sm:inline-flex`}>
                 CV ↓
               </a>
               <ThemeToggle className={`${btn} hidden items-center gap-1.5 sm:flex`} />
               <button
-                className={`${btn} lg:hidden`}
+                className={`${btn} inline-flex lg:hidden`}
                 onClick={() => setMenu((m) => !m)}
                 aria-expanded={menu}
                 aria-label={menu ? "Close menu" : "Open menu"}
               >
+                <span className="relative mr-2 block h-3 w-4" aria-hidden>
+                  <span className={`absolute left-0 h-[2px] w-4 rounded bg-ink transition-all duration-300 ${menu ? "top-[5px] rotate-45" : "top-0"}`} />
+                  <span className={`absolute left-0 top-[5px] h-[2px] w-4 rounded bg-ink transition-opacity duration-200 ${menu ? "opacity-0" : "opacity-100"}`} />
+                  <span className={`absolute left-0 h-[2px] w-4 rounded bg-ink transition-all duration-300 ${menu ? "top-[5px] -rotate-45" : "top-[10px]"}`} />
+                </span>
                 {menu ? "close" : "menu"}
               </button>
             </div>
@@ -121,7 +132,8 @@ export default function SiteNav() {
       <AnimatePresence>
         {menu ? (
           <motion.div
-            className="fixed inset-0 z-[75] flex flex-col justify-center bg-bg2 px-[6vw] pt-20"
+            data-lenis-prevent
+            className="fixed inset-0 z-[75] flex flex-col justify-center overflow-y-auto bg-bg2 px-[6vw] pb-[max(2rem,env(safe-area-inset-bottom))] pt-24"
             initial={{ clipPath: "circle(0% at 92% 4%)" }}
             animate={{ clipPath: "circle(150% at 92% 4%)" }}
             exit={{ clipPath: "circle(0% at 92% 4%)" }}
@@ -138,7 +150,7 @@ export default function SiteNav() {
                   <a
                     href={`#${l.id}`}
                     onClick={() => setMenu(false)}
-                    className="flex items-baseline gap-4 border-b-2 border-line/15 py-2.5 font-display text-[clamp(2rem,9vw,3.2rem)] font-extrabold leading-none"
+                    className={`flex items-baseline gap-4 border-b-2 border-line/15 py-3 font-display text-[clamp(1.9rem,8.5vw,3.2rem)] font-extrabold leading-none transition-colors active:text-coral ${active === l.id ? "text-coral" : ""}`}
                   >
                     <span className="micro text-coral">{String(i + 1).padStart(2, "0")}</span>
                     {l.label}
@@ -146,8 +158,8 @@ export default function SiteNav() {
                 </motion.li>
               ))}
             </ul>
-            <div className="mt-8 flex gap-3">
-              <a href={resume.cvHref} className={btn}>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <a href={resume.cvHref} className={`${btn} inline-flex`}>
                 CV ↓
               </a>
               <ThemeToggle className={`${btn} flex items-center gap-1.5`} />

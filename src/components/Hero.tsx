@@ -78,10 +78,18 @@ export default function Hero() {
     );
   }, []);
 
+  const [mascotSize, setMascotSize] = useState(300);
+  useEffect(() => {
+    const fit = () => setMascotSize(Math.max(240, Math.min(360, Math.round(window.innerWidth * 0.78))));
+    fit();
+    window.addEventListener("resize", fit);
+    return () => window.removeEventListener("resize", fit);
+  }, []);
+
   const letters = profile.name.toUpperCase().split("");
 
   return (
-    <section ref={section} id="top" className="relative flex min-h-[92vh] items-center overflow-hidden pb-10 pt-28">
+    <section ref={section} id="top" className="min-h-hero relative flex min-h-[92vh] items-center overflow-hidden pb-14 pt-24 md:pt-28">
       {show3d ? (
         <motion.div style={{ y: sceneY }} className="pointer-events-none absolute inset-0 opacity-70 md:opacity-90">
           <HeroScene />
@@ -125,7 +133,7 @@ export default function Hero() {
           </motion.p>
 
           <motion.div
-            className="mt-5 h-8"
+            className="mt-5 min-h-8"
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: INTRO_DELAY + 0.65 }}
@@ -134,7 +142,7 @@ export default function Hero() {
           </motion.div>
 
           <motion.div
-            className="mt-8 flex flex-wrap items-center gap-4"
+            className="mt-7 flex flex-wrap items-center gap-3 sm:gap-4"
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: INTRO_DELAY + 0.8 }}
@@ -149,7 +157,7 @@ export default function Hero() {
                 Asirive Cortex ↓
               </a>
             </Magnetic>
-            <span className="micro text-inksoft">{profile.status}</span>
+            <span className="micro w-full text-inksoft sm:w-auto">{profile.status}</span>
           </motion.div>
         </motion.div>
 
@@ -175,7 +183,7 @@ export default function Hero() {
           >
             <CypherMascot
               emotion={heroEmotion}
-              size={360}
+              size={mascotSize}
               priority
               showSpeech={showSpeech}
               speechText={heroSpeech}
